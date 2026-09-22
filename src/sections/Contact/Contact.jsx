@@ -43,6 +43,14 @@ export default function Contact() {
     if (sent) successRef.current?.focus()
   }, [sent])
 
+  useEffect(() => {
+    const handleServiceSelect = (e) => {
+      setForm((prev) => ({ ...prev, interest: e.detail }))
+    }
+    window.addEventListener('services:select', handleServiceSelect)
+    return () => window.removeEventListener('services:select', handleServiceSelect)
+  }, [])
+
   const validate = () => {
     const newErrors = {}
     if (!form.name.trim()) newErrors.name = t.contact.errors.name
