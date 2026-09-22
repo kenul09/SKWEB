@@ -1,0 +1,842 @@
+/* ============================================
+   CONTACT SECTION — CSS MODULE
+   
+   UI/UX Standards:
+   - Type Scale: Modular (1.250 - Major Third)
+   - Spacing: 8pt Grid System
+   - Line Height: Optimal Vertical Rhythm
+   - Color Contrast: WCAG AA Compliant
+   - Form UX: Material + Custom Components
+   ============================================ */
+
+.contact {
+  position: relative;
+  padding: var(--space-30) 0;                   /* 8pt grid */
+  background: transparent;
+  overflow: hidden;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+/* =========================
+   DECORATIVE BACKGROUND
+========================= */
+
+.bgGlow {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 40%;
+  height: 60%;
+  background: radial-gradient(circle at 40% 30%, var(--blue-glow), transparent 45%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatGlow 14s ease-in-out infinite;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 20px); }
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+  width: min(1400px, calc(100% - 96px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.contactInner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 64px;                          /* 8pt grid */
+  align-items: start;
+}
+
+/* =========================
+   LEFT — INFO
+========================= */
+
+.contactLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;                          /* 8pt grid */
+  position: sticky;
+  top: 120px;
+}
+
+/* =========================
+   SECTION LABEL (Consistency)
+========================= */
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;                          /* 8pt grid */
+  width: fit-content;
+  font-size: 0.8125rem;               /* 13px */
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue-bright, #7dd3fc);
+  margin: 0;
+}
+
+.labelDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--blue-bright, #38bdf8);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--blue-bright, #38bdf8);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* =========================
+   TITLE (H2)
+   Type: clamp(32px → 48px) / 1.15 / -0.02em / 800
+========================= */
+
+.contactTitle {
+  font-size: clamp(2rem, 4vw, 3rem);  /* 32px → 48px */
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* =========================
+   DESCRIPTION
+   Type: 17px / 1.7 / 0 / 400
+========================= */
+
+.contactDesc {
+  font-size: 1.0625rem;               /* 17px */
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);       /* WCAG AA, theme-aware */
+  max-width: 520px;
+  margin: 0;
+}
+
+/* =========================
+   FORM CONTAINER
+========================= */
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;                          /* 8pt grid */
+  padding: 40px;                      /* 8pt grid */
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;                /* 8pt grid */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(59, 130, 246, 0.08);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;                          /* 8pt grid */
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                           /* 8pt grid */
+  width: 100%;
+}
+
+/* =========================
+   FORM LABEL
+   Type: 13px / 1.4 / 0.02em / 600
+========================= */
+
+.formLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;               /* 13px */
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
+.required {
+  color: var(--terminal-red);
+  font-weight: 700;
+}
+
+/* =========================
+   FORM INPUTS
+   Type: 15px / 1.5 / 0 / 400
+   Min-height: 48px (touch target)
+========================= */
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  min-height: 48px;                   /* Touch target */
+  padding: 14px 16px;                 /* 8pt grid */
+  font-family: inherit;
+  font-size: 0.9375rem;               /* 15px */
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;                /* 8pt grid */
+  outline: none;
+  appearance: none;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: var(--text-muted);
+}
+
+.formInput:hover:not(:focus),
+.formSelect:hover:not(:focus),
+.formTextarea:hover:not(:focus) {
+  border-color: rgba(59, 130, 246, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Error state */
+.formInputError {
+  border-color: var(--terminal-red) !important;
+  background: rgba(248, 113, 113, 0.05) !important;
+}
+
+.formInputError:focus {
+  border-color: var(--terminal-red) !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15) !important;
+}
+
+/* Textarea specific */
+.formTextarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* =========================
+   CUSTOM SELECT
+========================= */
+
+.selectWrapper {
+  position: relative;
+}
+
+.formSelect {
+  cursor: pointer;
+  padding-right: 48px;
+}
+
+.formSelect option {
+  background: #0f172a;
+  color: var(--text-primary);
+  padding: 12px;
+}
+
+.selectIcon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.formSelect:focus + .selectIcon {
+  transform: translateY(-50%) rotate(180deg);
+  color: #3b82f6;
+}
+
+/* =========================
+   FORM ERROR MESSAGE
+   Type: 12px / 1.4 / 0 / 500
+========================= */
+
+.formError {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;                 /* 12px */
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--terminal-red);
+  margin-top: 2px;
+}
+
+/* =========================
+   CUSTOM CHECKBOX
+========================= */
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;                          /* 8pt grid */
+  cursor: pointer;
+  font-size: 0.875rem;                /* 14px */
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  user-select: none;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.checkboxBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: transparent;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.checkboxInput:checked + .checkboxBox {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.checkboxInput:focus-visible + .checkboxBox {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.checkboxLabel:hover .checkboxBox {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.checkboxText {
+  flex: 1;
+}
+
+.checkboxLink {
+  color: var(--blue-bright, #60a5fa);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.checkboxLink:hover {
+  color: var(--text-primary);
+}
+
+/* =========================
+   SUBMIT BUTTON
+   Type: 15px / 1 / 0.01em / 600
+   Min-height: 48px (touch target)
+========================= */
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  min-height: 48px;                   /* Touch target */
+  min-width: 240px;                   /* Stable width so the spinner doesn't reflow the button */
+  padding: 14px 32px;                 /* 8pt grid */
+  margin-top: 8px;
+  font-family: inherit;
+  font-size: 0.9375rem;               /* 15px */
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.45);
+}
+
+.submitBtn:hover:not(:disabled) svg:not(.spinner) {
+  transform: translateX(4px);
+}
+
+.submitBtn svg:not(.spinner) {
+  transition: transform 0.3s ease;
+}
+
+.submitBtn:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+.submitPrompt {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+/* =========================
+   SUBMIT ERROR
+========================= */
+
+.submitError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;                 /* 8pt grid */
+  font-size: 0.875rem;                /* 14px */
+  line-height: 1.5;
+  font-weight: 500;
+  /* text stays --text-primary (not red) so contrast holds in both themes —
+     the wash + border + icon already carry the "error" signal */
+  color: var(--text-primary);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--terminal-red);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.submitErrorIcon {
+  color: var(--terminal-red);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* =========================
+   LOADING SPINNER
+========================= */
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* =========================
+   DISABLED STATES
+========================= */
+
+.formInput:disabled,
+.formSelect:disabled,
+.formTextarea:disabled,
+.checkboxInput:disabled + .checkboxBox,
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submitBtn:disabled {
+  transform: none !important;
+}
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
+
+.successMsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;                          /* 8pt grid */
+  padding: 64px 40px;                 /* 8pt grid */
+  background: var(--bg-card);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;                /* 8pt grid */
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(59, 130, 246, 0.15);
+  animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.successIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--terminal-green), #16a34a);
+  border-radius: 50%;
+  color: #ffffff;
+  box-shadow: 0 0 32px rgba(74, 222, 128, 0.4);
+  animation: successIconPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+/* =========================
+   SUCCESS TITLE (H3)
+   Type: 24px mono / 1.3 / -0.02em / 700
+   Terminal-style "> " prompt prefix + --terminal-green (icon + color + text,
+   never color alone — the checkmark icon above already carries the meaning)
+========================= */
+
+.successTitle {
+  font-size: 1.5rem;                  /* 24px */
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-family: var(--font-mono);
+  color: var(--terminal-green);
+  margin: 0;
+}
+
+/* =========================
+   SUCCESS TEXT
+   Type: 16px / 1.65 / 0 / 400
+========================= */
+
+.successText {
+  font-size: 1rem;                    /* 16px */
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+  max-width: 380px;
+  margin: 0;
+}
+
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes successIconPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .contact {
+    padding: var(--space-24) 0;                  /* 8pt grid */
+  }
+
+  .container {
+    width: min(100%, calc(100% - 64px));
+  }
+
+  .contactInner {
+    grid-template-columns: 1fr 1.4fr;
+    gap: 48px;
+  }
+
+  .contactLeft {
+    position: static;
+    top: auto;
+    gap: 16px;
+  }
+
+  .contactTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+  }
+
+  .contactDesc {
+    font-size: 1rem;                  /* 16px */
+  }
+
+  .contactForm {
+    padding: 32px;
+    gap: 18px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--space-18) 0;                  /* 8pt grid */
+  }
+
+  .container {
+    width: min(100%, calc(100% - 48px));
+  }
+
+  .contactInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contactLeft {
+    gap: 14px;
+  }
+
+  .sectionLabel {
+    font-size: 0.75rem;               /* 12px */
+    letter-spacing: 0.18em;
+  }
+
+  .contactTitle {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  .contactDesc {
+    font-size: 0.9375rem;             /* 15px */
+    line-height: 1.65;
+    max-width: 100%;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .contactForm {
+    padding: 28px 20px;
+    gap: 16px;
+    border-radius: 18px;
+  }
+
+  .formInput,
+  .formSelect,
+  .formTextarea {
+    font-size: 0.9375rem;             /* 15px */
+    padding: 12px 14px;
+  }
+
+  .formTextarea {
+    min-height: 110px;
+  }
+
+  .submitBtn {
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .successMsg {
+    padding: 48px 32px;
+    gap: 16px;
+    border-radius: 18px;
+  }
+
+  .successIcon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .successTitle {
+    font-size: 1.375rem;              /* 22px */
+  }
+
+  .successText {
+    font-size: 0.9375rem;             /* 15px */
+  }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL MOBILE (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .contact {
+    padding: var(--space-14) 0;
+  }
+
+  .container {
+    width: min(100%, calc(100% - 32px));
+  }
+
+  .contactInner {
+    gap: 32px;
+  }
+
+  .contactLeft {
+    gap: 12px;
+  }
+
+  .sectionLabel {
+    font-size: 0.6875rem;             /* 11px */
+    letter-spacing: 0.16em;
+  }
+
+  .contactTitle {
+    font-size: clamp(1.5rem, 7vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  .contactDesc {
+    font-size: 0.875rem;              /* 14px */
+    line-height: 1.6;
+  }
+
+  .contactForm {
+    padding: 24px 16px;
+    gap: 14px;
+    border-radius: 16px;
+  }
+
+  .formLabel {
+    font-size: 0.75rem;               /* 12px */
+  }
+
+  .formInput,
+  .formSelect,
+  .formTextarea {
+    font-size: 0.875rem;              /* 14px */
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .formTextarea {
+    min-height: 100px;
+  }
+
+  .formError {
+    font-size: 0.6875rem;             /* 11px */
+  }
+
+  .checkboxLabel {
+    font-size: 0.8125rem;             /* 13px */
+    gap: 10px;
+  }
+
+  .checkboxBox {
+    width: 18px;
+    height: 18px;
+  }
+
+  .submitBtn {
+    font-size: 0.875rem;              /* 14px */
+    padding: 12px 24px;
+  }
+
+  .successMsg {
+    padding: 40px 24px;
+    gap: 14px;
+    border-radius: 14px;
+  }
+
+  .successIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .successTitle {
+    font-size: 1.25rem;               /* 20px */
+  }
+
+  .successText {
+    font-size: 0.875rem;              /* 14px */
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility WCAG 2.1)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bgGlow,
+  .labelDot,
+  .spinner {
+    animation: none;
+  }
+
+  .successMsg,
+  .successIcon {
+    animation: none;
+  }
+
+  .formInput,
+  .formSelect,
+  .formTextarea,
+  .checkboxBox,
+  .submitBtn,
+  .selectIcon {
+    transition: none;
+  }
+
+  .submitBtn:hover {
+    transform: none;
+  }
+
+  .submitBtn:hover svg:not(.spinner) {
+    transform: none;
+  }
+}

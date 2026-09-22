@@ -1,0 +1,526 @@
+/* ============================================
+   TESTIMONIALS SECTION — CSS MODULE
+   
+   UI/UX Standards:
+   - Type Scale: Modular (1.250 - Major Third)
+   - Spacing: 8pt Grid System
+   - Line Height: Optimal Vertical Rhythm
+   - Color Contrast: WCAG AA Compliant
+   - Card Design: Material + Glassmorphism
+   ============================================ */
+
+.testimonials {
+  position: relative;
+  padding: var(--space-30) 0;                   /* 8pt grid */
+  overflow: hidden;
+}
+
+/* =========================
+   DECORATIVE BACKGROUND
+========================= */
+
+.bgGlow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 50%;
+  background: radial-gradient(circle at 50% 30%, var(--blue-glow-sm), transparent 60%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatGlow 14s ease-in-out infinite;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-30px); }
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+  width: min(1400px, calc(100% - 96px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.testHeader {
+  text-align: center;
+  margin: 0 auto 64px;                /* 8pt grid: 64px */
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;                          /* 8pt grid */
+}
+
+/* =========================
+   SECTION LABEL (Consistency)
+========================= */
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;                          /* 8pt grid */
+  width: fit-content;
+  font-size: 0.8125rem;               /* 13px */
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue-bright, #7dd3fc);
+  margin: 0;
+}
+
+.labelDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--blue-bright, #38bdf8);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--blue-bright, #38bdf8);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* =========================
+   TITLE (H2)
+   Type: clamp(32px → 48px) / 1.15 / -0.02em / 800
+========================= */
+
+.testTitle {
+  font-size: clamp(2rem, 4vw, 3rem);  /* 32px → 48px */
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* =========================
+   SUBTITLE
+   Type: 17px / 1.7 / 0 / 400
+========================= */
+
+.testSub {
+  font-size: 1.0625rem;               /* 17px */
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.testGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;                          /* 8pt grid */
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.testCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;                      /* 8pt grid */
+  background: rgba(10, 25, 47, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;                /* 8pt grid */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.17);
+  overflow: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.testCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, var(--blue-glow-sm), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.testCard:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.28),
+    0 0 32px rgba(37, 99, 235, 0.15);
+}
+
+.testCard:hover::before {
+  opacity: 1;
+}
+
+/* =========================
+   QUOTE ICON (Decorative)
+========================= */
+
+.quoteIcon {
+  color: var(--blue-bright, #38bdf8);
+  opacity: 0.2;
+  margin-bottom: 16px;                /* 8pt grid */
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.testCard:hover .quoteIcon {
+  opacity: 0.4;
+}
+
+/* =========================
+   STARS (SVG-based)
+========================= */
+
+.testStars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;                           /* 8pt grid */
+  margin-bottom: 20px;                /* 8pt grid */
+  position: relative;
+  z-index: 1;
+}
+
+.star {
+  color: rgba(255, 255, 255, 0.15);   /* Empty star color */
+  transition: color 0.3s ease;
+}
+
+.starFilled {
+  color: #fbbf24;                     /* Gold filled */
+}
+
+/* =========================
+   QUOTE TEXT (blockquote)
+   Type: 15px / 1.75 / 0 / 400
+========================= */
+
+.testText {
+  font-size: 0.9375rem;               /* 15px */
+  line-height: 1.75;                  /* Optimal for body */
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-secondary);       /* WCAG AA, theme-aware */
+  margin: 0 0 28px;                   /* 8pt grid */
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  font-style: normal;                 /* italic was tiring to read */
+}
+
+/* =========================
+   AUTHOR (footer)
+========================= */
+
+.testAuthor {
+  display: flex;
+  align-items: center;
+  gap: 12px;                          /* 8pt grid */
+  padding-top: 20px;                  /* 8pt grid */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 1;
+}
+
+.testAvatar {
+  width: 44px;                        /* Touch target */
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.875rem;                /* 14px */
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.testAuthorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* =========================
+   AUTHOR NAME
+   Type: 15px / 1.3 / -0.01em / 600
+========================= */
+
+.testName {
+  font-size: 0.9375rem;               /* 15px */
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* =========================
+   AUTHOR ROLE
+   Type: 13px / 1.4 / 0 / 400
+========================= */
+
+.testRole {
+  font-size: 0.8125rem;               /* 13px */
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .testimonials {
+    padding: var(--space-24) 0;                  /* 8pt grid */
+  }
+
+  .container {
+    width: min(100%, calc(100% - 64px));
+  }
+
+  .testHeader {
+    margin-bottom: 48px;              /* 8pt grid */
+    gap: 16px;
+  }
+
+  .testTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+  }
+
+  .testSub {
+    font-size: 1rem;                  /* 16px */
+  }
+
+  .testGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .testCard {
+    padding: 28px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .testimonials {
+    padding: var(--space-18) 0;                  /* 8pt grid */
+  }
+
+  .container {
+    width: min(100%, calc(100% - 48px));
+  }
+
+  .testHeader {
+    margin-bottom: 40px;
+    gap: 14px;
+  }
+
+  .sectionLabel {
+    font-size: 0.75rem;               /* 12px */
+    letter-spacing: 0.18em;
+  }
+
+  .testTitle {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  .testSub {
+    font-size: 0.9375rem;             /* 15px */
+    line-height: 1.65;
+  }
+
+  .testGrid {
+    gap: 16px;
+  }
+
+  .testCard {
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .quoteIcon {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 12px;
+  }
+
+  .testStars {
+    margin-bottom: 16px;
+  }
+
+  .testText {
+    font-size: 0.875rem;              /* 14px */
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .testAuthor {
+    padding-top: 16px;
+  }
+
+  .testAvatar {
+    width: 40px;
+    height: 40px;
+    font-size: 0.8125rem;             /* 13px */
+  }
+
+  .testName {
+    font-size: 0.875rem;              /* 14px */
+  }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET → MOBILE (600px)
+   ============================================ */
+
+@media (max-width: 600px) {
+  .testGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL MOBILE (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .testimonials {
+    padding: var(--space-14) 0;
+  }
+
+  .container {
+    width: min(100%, calc(100% - 32px));
+  }
+
+  .testHeader {
+    margin-bottom: 32px;
+    gap: 12px;
+  }
+
+  .sectionLabel {
+    font-size: 0.6875rem;             /* 11px */
+    letter-spacing: 0.16em;
+  }
+
+  .testTitle {
+    font-size: clamp(1.5rem, 7vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  .testSub {
+    font-size: 0.875rem;              /* 14px */
+    line-height: 1.6;
+  }
+
+  .testCard {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .quoteIcon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 10px;
+  }
+
+  .star {
+    width: 14px;
+    height: 14px;
+  }
+
+  .testStars {
+    margin-bottom: 14px;
+  }
+
+  .testText {
+    font-size: 0.875rem;              /* 14px */
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .testAuthor {
+    padding-top: 14px;
+    gap: 10px;
+  }
+
+  .testAvatar {
+    width: 38px;
+    height: 38px;
+    font-size: 0.75rem;               /* 12px */
+  }
+
+  .testName {
+    font-size: 0.875rem;              /* 14px */
+  }
+
+  .testRole {
+    font-size: 0.75rem;               /* 12px */
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility WCAG 2.1)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bgGlow,
+  .labelDot {
+    animation: none;
+  }
+
+  .testCard,
+  .testCard::before,
+  .quoteIcon,
+  .star {
+    transition: none;
+  }
+
+  .testCard:hover {
+    transform: none;
+  }
+}

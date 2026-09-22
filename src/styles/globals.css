@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* =========================
+   BASE
+========================= */
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keeps section titles clear of the sticky navbar (84px) when jumping
+     via nav links / anchors — without this, scrollIntoView lands the
+     section top right behind the header. */
+  scroll-padding-top: 92px;
+}
+
+@media (max-width: 1024px) {
+  html {
+    scroll-padding-top: 84px;
+  }
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+main {
+  position: relative;
+}
+
+/* =========================
+   CONTAINER (Universal Spacing)
+========================= */
+
+.container {
+  width: min(1200px, calc(100% - 96px));
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: min(100%, calc(100% - 64px));
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100%, calc(100% - 40px));
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(100%, calc(100% - 32px));
+  }
+}
+
+/* =========================
+   SECTION (UI/UX Spacing Rules)
+   Desktop: 120px → Tablet: 96px → Mobile: 72px → Small: 56px
+========================= */
+
+.section {
+  position: relative;
+  padding: 120px 0;
+  min-height: auto;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, var(--blue-glow), transparent 20%),
+    radial-gradient(circle at 80% 40%, var(--blue-glow-sm), transparent 18%);
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 96px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 72px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 56px 0;
+  }
+}
+
+/* =========================
+   SECTION LABELS & TITLES
+========================= */
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+.section-label::before {
+  content: '✦';
+  font-size: 10px;
+}
+
+.section-label::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--blue-bright);
+  opacity: 0.6;
+}
+
+.section-title {
+  margin-bottom: 48px;
+}
+
+.section-title-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+  .section-title {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-label {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .section-label::after {
+    width: 40px;
+  }
+
+  .section-title {
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    margin-bottom: 24px;
+  }
+}
+
+/* =========================
+   BUTTONS (Responsive)
+========================= */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--blue-primary), var(--blue-bright));
+  color: #fff;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 14px 32px var(--blue-glow);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--blue-bright), var(--blue-primary));
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px var(--blue-glow);
+}
+
+.btn-primary .arrow {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover .arrow {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-glow-sm);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 22px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  backdrop-filter: blur(12px);
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  color: var(--blue-bright);
+  background: var(--blue-glow);
+  border-color: var(--border-hover);
+  gap: 12px;
+}
+
+/* Responsive Buttons */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-ghost {
+    font-size: 14px;
+    padding: 12px 24px;
+  }
+
+  .btn-primary .arrow {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-ghost {
+    font-size: 13px;
+    padding: 11px 20px;
+    gap: 8px;
+  }
+
+  .btn-primary .arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   CARD (Reusable)
+========================= */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   UTILS
+========================= */
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* =========================
+   TERMINAL WINDOW CHROME
+   Shared, purely decorative "macOS titlebar" strip —
+   reused by Hero and Projects cards. Never interactive.
+========================= */
+
+.terminal-chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-terminal);
+  border-bottom: 1px solid var(--border-code);
+  pointer-events: none;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.terminal-dot-red    { background: #ff5f56; }
+.terminal-dot-yellow { background: #ffbd2e; }
+.terminal-dot-green  { background: #27c93f; }
+
+/* =========================
+   CURSOR BLINK
+   Shared blinking "|" caret for terminal-style accents.
+========================= */
+
+.cursor-blink {
+  display: inline-block;
+  animation: cursorBlink 1.1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  from, to { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* =========================
+   REDUCED MOTION (Accessibility)
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

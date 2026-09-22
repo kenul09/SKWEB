@@ -1,0 +1,361 @@
+/* ============================================
+   SKWEB SHOWCASE — CSS MODULE
+   UI/UX Standards: 8pt Grid + Clean Video Showcase
+   ============================================ */
+
+.skwebShowcase {
+  position: relative;
+  padding: var(--space-30) 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* =========================
+   DECORATIVE BACKGROUND
+========================= */
+
+.bgGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, var(--blue-glow), transparent 20%),
+    radial-gradient(circle at 80% 30%, var(--blue-glow-sm), transparent 25%);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatGlow 14s ease-in-out infinite;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, 20px); }
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+  width: min(1400px, calc(100% - 96px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 64px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.showcaseHeader {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* =========================
+   SECTION LABEL (Hero & About ilə uyğun)
+========================= */
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blue-bright, #7dd3fc);
+  margin: 0;
+}
+
+.labelDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--blue-bright, #38bdf8);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--blue-bright, #38bdf8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* =========================
+   PILLS / TAGS
+========================= */
+
+.showcaseLabels {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sectionPill {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--blue-glow-sm);
+  color: var(--blue-bright);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.sectionPill:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  background: var(--blue-glow);
+}
+
+.sectionPillSecondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+/* =========================
+   LEAD TEXT
+========================= */
+
+.showcaseLead {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75;
+  color: var(--text-secondary);
+  letter-spacing: -0.005em;
+  max-width: 620px;
+  margin: 0;
+}
+
+/* =========================
+   VIDEO WRAPPER
+========================= */
+
+.showcaseVideoWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  isolation: isolate;
+}
+
+.showcaseVideoWrapper::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* =========================
+   VIDEO
+========================= */
+
+.showcaseVideo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow:
+    var(--shadow-card),
+    0 0 40px var(--blue-glow);
+  object-fit: cover;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.showcaseVideo:hover {
+  border-color: var(--border-hover);
+  box-shadow:
+    var(--shadow-card),
+    0 0 60px var(--blue-glow);
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .skwebShowcase {
+    padding: var(--space-24) 0;
+  }
+
+  .container {
+    width: min(100%, calc(100% - 64px));
+  }
+
+  .showcaseGrid {
+    gap: 48px;
+  }
+
+  .showcaseHeader {
+    max-width: 680px;
+    gap: 18px;
+  }
+
+  .showcaseLead {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.7;
+  }
+
+  .showcaseVideoWrapper::before {
+    inset: -32px;
+    filter: blur(70px);
+  }
+
+  .showcaseVideo {
+    border-radius: 22px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .skwebShowcase {
+    padding: var(--space-18) 0;
+  }
+
+  .container {
+    width: min(100%, calc(100% - 48px));
+  }
+
+  .showcaseGrid {
+    gap: 40px;
+  }
+
+  .showcaseHeader {
+    gap: 16px;
+  }
+
+  .sectionLabel {
+    font-size: 0.75rem; /* 12px */
+    letter-spacing: 0.25em;
+  }
+
+  .showcaseLabels {
+    gap: 10px;
+  }
+
+  .sectionPill {
+    font-size: 12px;
+    padding: 8px 18px;
+    letter-spacing: 0.1em;
+  }
+
+  .showcaseLead {
+    font-size: 1rem; /* 16px */
+    line-height: 1.7;
+  }
+
+
+  .showcaseVideoWrapper {
+    width: calc(100% - 24px);
+    margin: 0 auto;
+  }
+
+
+  .showcaseVideo {
+    border-radius: 20px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL MOBILE (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .skwebShowcase {
+    padding: var(--space-14) 0;
+  }
+
+  .container {
+    width: min(100%, calc(100% - 32px));
+  }
+
+  .showcaseGrid {
+    gap: 32px;
+  }
+
+  .showcaseHeader {
+    gap: 14px;
+  }
+
+  .sectionLabel {
+    font-size: 0.6875rem; /* 11px */
+    letter-spacing: 0.2em;
+  }
+
+  .showcaseLabels {
+    gap: 8px;
+  }
+
+  .sectionPill {
+    font-size: 11px;
+    padding: 7px 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .showcaseLead {
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.65;
+  }
+
+  .showcaseVideoWrapper::before {
+    inset: -16px;
+    filter: blur(40px);
+  }
+
+  .showcaseVideo {
+    border-radius: 16px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bgGlow,
+  .labelDot {
+    animation: none;
+  }
+
+  .sectionPill,
+  .showcaseVideo {
+    transition: none;
+  }
+}

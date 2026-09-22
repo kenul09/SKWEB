@@ -1,0 +1,802 @@
+/* ============================================
+   HERO SECTION — CSS MODULE
+   
+   UI/UX Standards:
+   - Type Scale: Modular (1.250 - Major Third)
+   - Spacing: 8pt Grid System
+   - Line Height: Optimal Vertical Rhythm
+   - Color Contrast: WCAG AA Compliant
+   - Visual Hierarchy: Single Focus Point
+   ============================================ */
+
+/* ── Section Base ──
+   No background of its own — lets .app's var(--bg-primary) show through
+   in the margin around .heroFrame below, so the card reads as floating on
+   the page rather than full-bleed. overflow: visible (not hidden) — with
+   it hidden, the character PNG (which can run taller than a short
+   viewport once heroFrame's margin/padding is added on top of its own
+   height) was getting clipped at the bottom edge. */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: visible;
+  color: #f8fbff;
+}
+
+/* ── Floating card ──
+   Carries the hero's original background/visual treatment (moved here
+   from .hero) inside a rounded, bordered card that sits just under the
+   sticky Navbar (Navbar itself lives outside this in App.jsx, untouched).
+   overflow stays visible: border-radius already clips this element's own
+   background regardless (CSS default), and visible lets the orbital
+   rings/badges bleed slightly past the card edge instead of being cut
+   off — see Hero.jsx comment. */
+.heroFrame {
+  position: relative;
+  overflow: visible;
+  margin: 12px 24px 24px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  /* Base gradient uses --bg-secondary/--bg-primary (existing surface
+     tokens) instead of the near-black hex it had before — reads as dark
+     navy blue rather than plain black, while the two radial glows on top
+     add the brighter blue accent. */
+  background:
+    radial-gradient(circle at 20% 10%, rgba(40, 130, 255, 0.12), transparent 18%),
+    radial-gradient(circle at 90% 15%, rgba(130, 196, 255, 0.06), transparent 12%),
+    linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 50%, var(--bg-secondary) 100%);
+}
+
+/* ============================================
+   BACKGROUND ORB (Single — Visual Hierarchy)
+   ============================================ */
+
+/* Clips .bgOrb to the frame's rounded shape on its own (independent of
+   .heroFrame's overflow: visible, which stays visible so the character
+   and badges can still bleed past the card's edge). Without this, the
+   orb — a 600px blur deliberately offset past the frame's own box —
+   escaped through that same overflow: visible and showed up as a stray
+   glow patch outside the card's top-right corner. */
+.heroFrameClip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgOrb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.25), transparent 70%);
+  filter: blur(120px);
+  top: -150px;
+  right: -100px;
+  z-index: 1;
+  pointer-events: none;
+  animation: floatOrb 12s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, 40px); }
+}
+
+/* ── Inner Layout ── */
+.heroInner {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 64px;                          /* 8pt grid: 64px */
+  padding: 120px 48px 96px;           /* 8pt grid: 120/48/96 */
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   LEFT — CONTENT
+   ============================================ */
+
+.heroContent {
+  max-width: 560px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   INTRO LABEL
+   Type: 13px / 1.4 / 0.2em / 700
+   ============================================ */
+
+.heroIntro {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;                          /* 8pt grid */
+  font-size: 0.8125rem;               /* 13px */
+  line-height: 1.4;                   /* Optimal for small caps */
+  letter-spacing: 0.2em;              /* Wide tracking for UPPERCASE */
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fbfbfb;
+  margin: 0 0 24px;                   /* 8pt grid: 24px */
+  width: fit-content;
+}
+
+.introPrefix {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #38bdf8;
+}
+
+.introDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #38bdf8;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* ============================================
+   HEADING (H1) — Display
+   Type: clamp(40px → 72px) / 1.1 / -0.03em / 800
+   UI/UX: Max 72px on desktop (Modular Scale)
+   ============================================ */
+
+.heroHeading {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);  /* 40px → 72px (was 96px - too big!) */
+  line-height: 1.1;                        /* Was 1 - too tight, hard to read */
+  font-weight: 800;                        /* Was 900 - less aggressive */
+  letter-spacing: -0.03em;                 /* Optical correction for large size */
+  margin: 0 0 16px;                        /* 8pt grid: 16px */
+  color: #ffffff;
+}
+
+.headingAccent {
+  background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 50%, #fbfbfb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   ROLE / PROFESSION
+   Type: clamp(18px → 20px) / 1.4 / 0 / 500
+   UI/UX: Subtitle weight - not competing with H1
+   ============================================ */
+
+.heroRole {
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);  /* 18px → 20px */
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #ffffff;
+  margin: 0 0 24px;                             /* 8pt grid: 24px */
+}
+
+/* ── Decorative terminal-prompt flourish under the role line — aria-hidden ── */
+.heroPrompt {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;                /* 13px */
+  line-height: 1.4;
+  font-weight: 500;
+  color: rgba(245, 248, 255, 0.5);
+  margin: -12px 0 24px;
+}
+
+/* ============================================
+   DESCRIPTION COPY
+   Type: 17px / 1.7 / 0 / 400
+   UI/UX: WCAG AA contrast — 0.88 opacity (was 0.82 — failed)
+   Line length: 540px max (~65 chars — readability)
+   ============================================ */
+
+.heroCopy {
+  font-size: 1.0625rem;               /* 17px */
+  line-height: 1.7;                   /* Optimal for body text */
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(245, 248, 255, 0.88);   /* WCAG AA compliant */
+  max-width: 540px;                   /* ~65 chars per line */
+  margin: 0 0 40px;                   /* 8pt grid: 40px */
+}
+
+/* ============================================
+   BUTTONS
+   Type: 15px / 1 / 0.01em / 600
+   Padding: 16px 32px (8pt grid)
+   Min height: 48px (Touch target — Fitts's Law)
+   ============================================ */
+
+.heroActions {
+  display: flex;
+  gap: 16px;                          /* 8pt grid */
+  flex-wrap: wrap;
+  margin: 0 0 40px;                   /* 8pt grid: 40px */
+}
+
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 160px;
+  min-height: 48px;                   /* Touch target — accessibility */
+  padding: 14px 32px;                 /* 8pt grid */
+  font-family: inherit;
+  font-size: 0.9375rem;               /* 15px */
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.45);
+}
+
+.btnPrimary svg {
+  transition: transform 0.25s ease;
+}
+
+.btnPrimary:hover svg {
+  transform: translateX(4px);
+}
+
+.btnGhost {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btnGhost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btnPrimary:focus-visible,
+.btnGhost:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+/* ============================================
+   SOCIAL LINKS
+   Size: 44x44px (Touch target — accessibility)
+   ============================================ */
+
+.heroSocials {
+  display: flex;
+  align-items: center;
+  gap: 12px;                          /* 8pt grid */
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;                        /* Touch target minimum */
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(245, 248, 255, 0.7);
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.socialLink:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: transparent;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.socialLink:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+/* ============================================
+   RIGHT — VISUAL
+   ============================================ */
+
+.heroRight {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* ── Orbital Scene ──
+   aspect-ratio (not a paired width+height) keeps this a perfect square
+   even where max-width: 100% has to shrink the width on an in-between
+   viewport — a plain fixed height wouldn't shrink with it, desyncing the
+   box and throwing off every percentage-based child position (including
+   .characterWrapper's top/left), which was one source of the character
+   appearing to bleed past the frame's bottom edge. */
+.orbitScene {
+  position: relative;
+  width: 480px;
+  aspect-ratio: 1;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+/* Concentric rings — decorative only, rotate slowly and independently.
+   Centered via inset + margin:auto so `transform` stays free for rotation. */
+.orbitRing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  aspect-ratio: 1;
+  border: 1px solid var(--blue-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbitRotate linear infinite;
+}
+
+.orbitRingOuter {
+  width: 480px;
+  opacity: 0.2;
+  animation-duration: 60s;
+}
+
+.orbitRingMiddle {
+  width: 380px;
+  opacity: 0.3;
+  animation-duration: 50s;
+  animation-direction: reverse;
+}
+
+.orbitRingInner {
+  width: 290px;
+  opacity: 0.45;
+  animation-duration: 40s;
+}
+
+@keyframes orbitRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Small glowing dots riding along each ring's own circumference — plain
+   children of the ring elements, so the ring's rotation carries them
+   along for free. Positioned via top/left from Hero.jsx (radius always
+   50% of the ring's own box, i.e. exactly on its border). */
+.orbitDot {
+  position: absolute;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blue-bright);
+  box-shadow: 0 0 6px 2px var(--blue-glow);
+  transform: translate(-50%, -50%);
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
+}
+
+/* Stagger so the dots on a given ring don't all pulse in sync */
+.orbitDot:nth-child(2) { animation-delay: 0.6s; }
+.orbitDot:nth-child(3) { animation-delay: 1.2s; }
+.orbitDot:nth-child(4) { animation-delay: 1.8s; }
+.orbitDot:nth-child(5) { animation-delay: 2.4s; }
+
+/* ── Character — natural PNG silhouette, no crop/frame ──
+   Sized and offset right-of-center so her shoulders and the top of her
+   head break past the inner ring, reading as "stepping out of" the rings
+   rather than contained inside one. Anchored higher (45%, not 50%).
+   width up ~25% from the previous pass (210px → 262px) for a more
+   pronounced breakout; height stays auto (driven by the image's own
+   aspect ratio, on top of .orbitScene's aspect-ratio fix above) so this
+   size increase can't reintroduce the earlier bottom-clipping bug — the
+   box just grows uniformly instead of a fixed height cropping it. */
+.characterWrapper {
+  position: absolute;
+  z-index: 2;
+  top: 45%;
+  left: 59%;
+  transform: translate(-50%, -50%);
+  width: 262px;
+}
+
+.characterImage {
+  display: block;
+  width: 100%;
+  height: auto;                /* natural aspect ratio, no cropping */
+  /* Hugs the actual alpha silhouette (unlike box-shadow, which would draw
+     a rectangle) — reuses the existing --blue-glow token, no new color. */
+  filter: drop-shadow(0 20px 60px var(--blue-glow));
+}
+
+/* ── Tech badges — fixed position, never rotate with the rings ──
+   top/left come from Hero.jsx (computed from each badge's angle via
+   cos/sin as a % of .orbitScene, which is always square, so this scales
+   correctly at every breakpoint without extra media queries here). The
+   group carries the position + float animation; the icon box is its
+   only flow child. */
+.techBadgeGroup {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  /* duration/delay come from Hero.jsx per badge, via inline style, so
+     they don't all bob in sync */
+  animation-name: badgeFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* translate(-50%,-50%) has to live inside the keyframe itself (not as a
+   separate static `transform`) since an animated `transform` replaces the
+   whole property rather than composing with one set outside it. */
+@keyframes badgeFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%      { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+/* ~21% smaller than the original 56px badges so 11 of them don't crowd. */
+.techBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  color: var(--blue-bright);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Two-line variant for the icon-less "UI/UX Design" badge */
+.techBadgeTwoLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.techBadgeText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   ANIMATION
+   ============================================ */
+
+.fadeInUp {
+  opacity: 0;
+  animation: fadeInUp 0.7s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (1100px)
+   ============================================ */
+
+@media (max-width: 1100px) {
+  .heroInner {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 96px 40px 80px;          /* 8pt grid */
+    gap: 48px;
+    min-height: auto;
+  }
+
+  .heroContent {
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .heroIntro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heroCopy {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heroActions,
+  .heroSocials {
+    justify-content: center;
+  }
+
+  .orbitScene {
+    width: 380px;
+    margin: 0 auto;
+  }
+
+  .orbitRingOuter { width: 380px; }
+  .orbitRingMiddle { width: 300px; }
+  .orbitRingInner { width: 230px; }
+
+  .characterWrapper {
+    width: 210px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (768px)
+   Type Scale adjusted for mobile readability
+   ============================================ */
+
+/* ============================================
+   RESPONSIVE — MOBILE (768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .heroFrame {
+    margin: 8px 16px 16px;
+    border-radius: 20px;
+  }
+
+  .heroInner {
+    padding: 80px 24px 64px;
+    gap: 40px;
+  }
+
+  .heroIntro {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+  }
+
+  .heroHeading {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .heroRole {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .heroCopy {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  /* VISUAL */
+
+  .orbitScene {
+    width: 300px;
+  }
+
+  .orbitRingOuter { width: 300px; }
+  .orbitRingMiddle { width: 236px; }
+  .orbitRingInner { width: 180px; }
+
+  .characterWrapper {
+    width: 168px;
+  }
+
+  .techBadge {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
+  }
+
+  .techBadgeText {
+    font-size: 0.625rem;
+  }
+
+  .techBadgeTwoLine {
+    font-size: 0.375rem;
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    min-width: 140px;
+    padding: 14px 24px;
+    font-size: 0.875rem;
+  }
+
+  .heroActions {
+    margin-bottom: 32px;
+  }
+
+  .bgOrb {
+    width: 400px;
+    height: 400px;
+    opacity: 0.6;
+  }
+}
+/* ============================================
+   RESPONSIVE — SMALL MOBILE (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .heroFrame {
+    margin: 8px 12px 12px;
+    border-radius: 16px;
+  }
+
+  .heroInner {
+    padding: 64px 20px 56px;          /* 8pt grid */
+    gap: 32px;
+  }
+
+  .heroIntro {
+    font-size: 0.6875rem;             /* 11px */
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+  }
+
+  .heroHeading {
+    font-size: clamp(1.75rem, 9vw, 2.25rem);  /* 28px → 36px */
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .heroRole {
+    font-size: 0.9375rem;             /* 15px */
+    margin-bottom: 16px;
+  }
+
+  .heroCopy {
+    font-size: 0.875rem;              /* 14px */
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    width: 100%;
+    min-width: unset;
+    padding: 14px 20px;
+  }
+
+  .orbitScene {
+    width: 240px;
+  }
+
+  .orbitRingOuter { width: 240px; }
+  .orbitRingMiddle { width: 190px; }
+  .orbitRingInner { width: 145px; }
+
+  .characterWrapper {
+    width: 134px;
+  }
+
+  .techBadge {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .techBadgeText {
+    font-size: 0.5625rem;
+  }
+
+  .techBadgeTwoLine {
+    font-size: 0.3125rem;
+  }
+
+  .socialLink {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility WCAG 2.1)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bgOrb,
+  .introDot,
+  .orbitRing,
+  .orbitDot,
+  .fadeInUp {
+    animation: none;
+  }
+
+  /* .techBadgeGroup's centering transform lives inside @keyframes
+     badgeFloat (an animated `transform` replaces rather than composes
+     with a static one) — so turning the animation off here needs a
+     static transform put back, or every badge would snap to the
+     container's top-left corner. */
+  .techBadgeGroup {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
+
+  .btnPrimary,
+  .btnGhost,
+  .socialLink,
+  .btnPrimary svg {
+    transition: none;
+  }
+
+  .fadeInUp {
+    opacity: 1;
+  }
+}

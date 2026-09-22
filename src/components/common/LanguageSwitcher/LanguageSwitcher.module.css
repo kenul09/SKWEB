@@ -1,0 +1,105 @@
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-btn {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.lang-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--blue-glow), transparent);
+  transition: left 0.5s;
+}
+
+.lang-btn:hover::before {
+  left: 100%;
+}
+
+.lang-btn:hover {
+  background: var(--blue-glow-sm);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px var(--blue-glow);
+}
+
+.lang-btn.active {
+  background: var(--blue-primary);
+  color: #fff;
+  border-color: var(--blue-primary);
+  box-shadow: 0 4px 18px var(--blue-glow);
+}
+
+.lang-btn.active:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  box-shadow: 0 4px 18px var(--blue-glow);
+}
+
+/* =========================
+   RESPONSIVE — TABLET
+========================= */
+
+@media (max-width: 1024px) {
+  .lang-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE NAV
+========================= */
+
+@media (max-width: 900px) {
+  .language-switcher {
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .lang-btn {
+    flex: 1;
+    width: auto;
+    height: 48px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+}
+
+/* =========================
+   RESPONSIVE — SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .lang-btn {
+    height: 44px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+}

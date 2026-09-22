@@ -1,0 +1,504 @@
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: var(--navbar-bg);
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    min-height 0.3s ease;
+}
+
+.scrolled {
+  background: var(--navbar-bg-scrolled);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.navInner {
+  width: min(1400px, calc(100% - 96px));
+  margin: 0 auto;
+  min-height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  transition: min-height 0.3s ease;
+}
+
+.scrolled .navInner {
+  min-height: 72px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.navLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.navLogo:hover {
+  transform: scale(1.03);
+}
+
+.logoIcon {
+  filter: drop-shadow(0 0 8px var(--blue-glow));
+  transition: transform 0.4s ease;
+}
+
+.navLogo:hover .logoIcon {
+  transform: rotate(-10deg);
+}
+
+.logoText {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.logoAccent {
+  background: linear-gradient(135deg, var(--blue-bright), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logoCursor {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--blue-bright);
+  line-height: 1;
+  margin-left: 1px;
+}
+
+/* =========================
+   NAV LINKS (DESKTOP - PILL)
+========================= */
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.navLink {
+  position: relative;
+  background: transparent;
+  border: 0;
+  color: var(--text-secondary);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Non-color active cue: a monospace "> " prompt prefix — "current directory" feel.
+   Purely decorative generated content, so it isn't exposed to the a11y tree;
+   the link's real text (announced by screen readers) is unaffected. */
+.navLink::before {
+  display: inline-block;
+  width: 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: currentColor;
+  opacity: 0;
+  overflow: hidden;
+  vertical-align: middle;
+  transition: width 0.3s ease, opacity 0.3s ease, margin-right 0.3s ease;
+}
+
+.active::before {
+  width: 0.6em;
+  margin-right: 4px;
+  opacity: 1;
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+  background: var(--blue-glow-sm);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+}
+
+.active {
+  color: #fff;
+  background: var(--blue-primary);
+  box-shadow: 0 4px 14px var(--blue-glow);
+}
+
+.active:hover {
+  color: #fff;
+  background: var(--blue-primary);
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.desktopOnly {
+  display: block;
+}
+
+/* =========================
+   THEME TOGGLE
+========================= */
+
+.themeToggle {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.themeToggle:hover {
+  border-color: var(--border-hover);
+  background: var(--blue-glow-sm);
+  transform: translateY(-2px) rotate(15deg);
+  box-shadow: 0 0 22px var(--blue-glow);
+}
+
+.themeToggle:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+}
+
+.themeIcon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* =========================
+   BURGER (MOBILE)
+========================= */
+
+.burgerMenu {
+  width: 46px;
+  height: 46px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.burgerMenu:hover {
+  border-color: var(--border-hover);
+  background: var(--blue-glow-sm);
+}
+
+.burgerMenu:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+}
+
+.burgerLine {
+  width: 20px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Burger animation when open */
+.burgerOpen .burgerLine:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerOpen .burgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOpen .burgerLine:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================
+   MOBILE MENU OVERLAY
+========================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 998;
+}
+
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* =========================
+   MOBILE MENU (SIDE DRAWER)
+========================= */
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85%, 360px);
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  overflow-y: auto;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.mobileMenu.open {
+  transform: translateX(0);
+}
+
+.mobileMenuInner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 96px 24px 32px;
+}
+
+.mobileLink {
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    padding-left 0.3s ease;
+  opacity: 0;
+  animation: slideInRight 0.4s ease forwards;
+}
+
+.mobileLink:hover {
+  background: var(--blue-glow-sm);
+  border-color: var(--border-hover);
+  color: var(--blue-bright);
+  padding-left: 24px;
+}
+
+.mobileLinkActive {
+  background: var(--blue-primary);
+  border-color: var(--blue-primary);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--blue-glow);
+}
+
+.mobileLinkActive::before {
+  content: '> ';
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.mobileLinkActive:hover {
+  background: var(--blue-primary);
+  color: #fff;
+}
+
+.mobileDivider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0 8px;
+}
+
+.mobileLanguage {
+  margin-bottom: 8px;
+}
+
+.mobileThemeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.mobileThemeToggle:hover {
+  border-color: var(--border-hover);
+  background: var(--blue-glow-sm);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE — TABLET
+========================= */
+
+@media (max-width: 1024px) {
+  .navInner {
+    width: min(100%, calc(100% - 64px));
+    min-height: 76px;
+  }
+
+  .scrolled .navInner {
+    min-height: 68px;
+  }
+
+  .navLinks,
+  .desktopOnly,
+  .themeToggle {
+    display: none;
+  }
+
+  .burgerMenu {
+    display: inline-flex;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .navInner {
+    width: min(100%, calc(100% - 48px));
+  }
+
+  .logoText {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navInner {
+    width: min(100%, calc(100% - 32px));
+  }
+
+  .burgerMenu {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .logoText {
+    font-size: 20px;
+  }
+
+  .mobileMenu {
+    width: 100%;
+  }
+
+  .mobileMenuInner {
+    padding: 88px 20px 24px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION (Accessibility)
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navInner,
+  .navLogo,
+  .logoIcon,
+  .navLink,
+  .themeToggle,
+  .burgerLine,
+  .mobileMenu,
+  .mobileLink,
+  .overlay {
+    transition: none;
+    animation: none;
+  }
+}
