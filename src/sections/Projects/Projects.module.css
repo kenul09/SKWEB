@@ -1,6 +1,6 @@
 .projects {
   position: relative;
-  padding: var(--space-30) 0;
+  padding: var(--space-24) 0;
   background: transparent;
   overflow: hidden;
   color: var(--text-primary);
@@ -44,36 +44,32 @@
    HEADER
 ========================= */
 
-.projectsHeader {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 48px;
-  margin-bottom: 48px;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
 }
 
-.projectsHeaderText {
+.headerText {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 640px;
+  gap: var(--space-3);
+  max-width: 600px;
 }
-
-/* =========================
-   SECTION LABEL
-========================= */
 
 .sectionLabel {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   width: fit-content;
   font-size: 0.8125rem;
   line-height: 1.4;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--blue-bright, #7dd3fc);
+  color: var(--blue-bright);
   margin: 0;
 }
 
@@ -81,9 +77,9 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: var(--blue-bright, #38bdf8);
+  background: var(--blue-bright);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--blue-bright, #38bdf8);
+  box-shadow: 0 0 12px var(--blue-glow);
   animation: pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
@@ -93,12 +89,8 @@
   50% { transform: scale(1.4); opacity: 0.7; }
 }
 
-/* =========================
-   TITLE (H2)
-========================= */
-
-.projectsTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
+.title {
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
   line-height: 1.15;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -106,24 +98,11 @@
   margin: 0;
 }
 
-.titleAccent {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* =========================
-   SUBTITLE
-========================= */
-
-.projectsSub {
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  font-weight: 400;
-  letter-spacing: 0;
+.sub {
+  font-size: var(--text-base);
+  line-height: var(--lh-base);
   color: var(--text-secondary);
-  max-width: 540px;
+  max-width: 480px;
   margin: 0;
 }
 
@@ -131,419 +110,293 @@
    HEADER ACTIONS
 ========================= */
 
-.projectsHeaderActions {
+.headerActions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-4);
   flex-shrink: 0;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+.navBtns {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
 
-.btnPrimary,
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.navBtn:hover:not(:disabled) {
+  border-color: var(--border-hover);
+  background: var(--bg-secondary);
+  color: var(--blue-bright);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.navBtn:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+}
+
 .btnGhost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-2);
+  flex-shrink: 0;
   min-height: 44px;
-  padding: 12px 24px;
+  padding: var(--space-3) var(--space-6);
   font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1;
+  font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.01em;
-  border-radius: 999px;
-  border: none;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.btnPrimary {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: #ffffff;
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
-}
-
-.btnPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(59, 130, 246, 0.4);
-}
-
-.btnPrimary svg {
-  transition: transform 0.25s ease;
-}
-
-.btnPrimary:hover svg {
-  transform: translateX(3px);
-}
-
-.btnGhost {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
 .btnGhost:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  background: var(--bg-secondary);
 }
 
-.btnPrimary:focus-visible,
 .btnGhost:focus-visible {
-  outline: 2px solid #60a5fa;
+  outline: 2px solid var(--blue-bright);
   outline-offset: 3px;
 }
 
 /* =========================
-   GRID
+   CAROUSEL TRACK
 ========================= */
 
-.projectsGrid {
+.track {
+  --gap: var(--space-6);
+  --per-view: 3;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+  gap: var(--gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--space-2);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* ⚡ Tək sayda card olanda son card mərkəzdə görünür (yarımcadan tam ene qədər) */
-.projectsGrid > .projectCard:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-  max-width: calc(50% - 12px);
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+/* =========================
+   BROWSER FRAME
+========================= */
+
+.browserBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-terminal);
+  border-bottom: 1px solid var(--border-code);
+}
+
+.browserDot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.5;
+}
+
+.browserUrl {
+  flex: 1;
+  min-width: 0;
   margin: 0 auto;
+  max-width: 65%;
+  padding: 2px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--bg-card);
+  border: 1px solid var(--border-code);
+  border-radius: var(--radius-sm);
+}
+
+.mediaBody {
+  position: relative;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-terminal);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--project-color) 55%, var(--bg-card)),
+    color-mix(in srgb, var(--project-color) 25%, var(--bg-secondary))
+  );
+}
+
+.coverTitle {
+  font-size: var(--text-lg);
+  line-height: var(--lh-lg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 /* =========================
    CARD
 ========================= */
 
-.projectCard {
+.card {
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
   overflow: hidden;
-  border-radius: 20px;
   background: var(--bg-card);
   border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   text-decoration: none;
+  color: inherit;
   transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.4s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.projectCard:hover {
-  transform: translateY(-6px);
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.25),
-    0 0 32px rgba(59, 130, 246, 0.15);
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
-.projectCard:focus-visible {
-  outline: 2px solid #60a5fa;
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--blue-bright);
   outline-offset: 3px;
-}
-
-/* =========================
-   IMAGE WRAPPER & OVERLAY
-========================= */
-
-.projectImageWrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-/* Floats over the image like a code-editor titlebar — doesn't touch the
-   aspect-ratio box's height, just an overlay strip pinned to the top. */
-.projectImageWrapper :global(.terminal-chrome) {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  background: rgba(10, 20, 32, 0.55);
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-.projectImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.projectCard:hover .projectImage {
-  transform: scale(1.05);
-}
-
-/* Always-on per-card tint (via --card-accent) so cards sharing a reused
-   screenshot still read as visually distinct from one another. */
-.projectAccentWash {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(160deg, var(--card-accent, var(--blue-primary)) 0%, transparent 55%);
-  opacity: 0.28;
-  mix-blend-mode: hard-light;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.projectCard:hover .projectAccentWash {
-  opacity: 0.16;
-}
-
-.projectOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.85), rgba(37, 99, 235, 0.85));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.projectCard:hover .projectOverlay {
-  opacity: 1;
-}
-
-.projectOverlayIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  color: #ffffff;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transform: scale(0.8);
-  transition: transform 0.3s ease;
-}
-
-.projectCard:hover .projectOverlayIcon {
-  transform: scale(1);
 }
 
 /* =========================
    CONTENT
 ========================= */
 
-.projectContent {
+.content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-5);
   flex: 1;
 }
 
-/* =========================
-   PROJECT TITLE (H3) + URL
-========================= */
-
-.projectTitleRow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
+.type {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
 }
 
-.projectTitle {
-  font-size: 1.25rem;
+.cardTitle {
+  font-size: 1.0625rem;
   line-height: 1.3;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text-primary);
   margin: 0;
-  transition: color 0.3s ease;
 }
 
-.projectCard:hover .projectTitle {
-  color: var(--blue-bright, #60a5fa);
-}
-
-/* Decorative "file path" style domain fragment, e.g. cv-builder.vercel.app */
-.projectUrl {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  white-space: nowrap;
+.desc {
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-1);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 40%;
-  flex-shrink: 0;
 }
 
-/* =========================
-   PROJECT DESCRIPTION
-========================= */
-
-.projectDesc {
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-/* ============================================
-   PAGINATION
-   ============================================ */
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 48px;
-}
-
-.paginationBtn {
+.visitLink,
+.soonLink {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
+  gap: var(--space-1);
+  margin-top: auto;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
-.paginationBtn:hover:not(:disabled) {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
-  color: var(--blue-bright, #60a5fa);
-  transform: translateY(-2px);
+.visitLink {
+  color: var(--blue-bright);
 }
 
-.paginationBtn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.paginationBtn:focus-visible {
-  outline: 2px solid #60a5fa;
-  outline-offset: 2px;
-}
-
-/* =========================
-   PAGE NUMBERS
-========================= */
-
-.paginationNumbers {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.paginationNumber {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  height: 44px;
-  padding: 0 12px;
-  font-family: inherit;
-  font-size: 0.9375rem;
-  line-height: 1;
-  font-weight: 600;
-  letter-spacing: 0;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  cursor: pointer;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.paginationNumber:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.paginationNumberActive {
-  color: #ffffff;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  border-color: transparent;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-}
-
-.paginationNumberActive:hover {
-  color: #ffffff;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.45);
-}
-
-.paginationNumber:focus-visible {
-  outline: 2px solid #60a5fa;
-  outline-offset: 2px;
-}
-
-/* =========================
-   DOTS (...)
-========================= */
-
-.paginationDots {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  height: 44px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  user-select: none;
-}
-
-/* =========================
-   PAGE INFO
-========================= */
-
-.pageInfo {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+.soonLink {
   color: var(--text-muted);
 }
 
@@ -553,43 +406,16 @@
 
 @media (max-width: 1024px) {
   .projects {
-    padding: var(--space-24) 0;
+    padding: var(--space-20) 0;
   }
 
   .container {
     width: min(100%, calc(100% - 64px));
   }
 
-  .projectsHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 40px;
-  }
-
-  .projectsHeaderText {
-    gap: 14px;
-  }
-
-  .projectsTitle {
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
-  }
-
-  .projectsSub {
-    font-size: 1rem;
-  }
-
-  .projectsHeaderActions {
-    flex-wrap: wrap;
-  }
-
-  .projectsGrid {
-    gap: 20px;
-  }
-
-  /* Mərkəzdəki tək card — tablet üçün gap düzəldildi */
-  .projectsGrid > .projectCard:last-child:nth-child(odd) {
-    max-width: calc(50% - 10px);
+  .track {
+    --per-view: 2;
+    --gap: var(--space-5);
   }
 }
 
@@ -599,20 +425,23 @@
 
 @media (max-width: 768px) {
   .projects {
-    padding: var(--space-18) 0;
+    padding: var(--space-16) 0;
   }
 
   .container {
     width: min(100%, calc(100% - 48px));
   }
 
-  .projectsHeader {
-    margin-bottom: 32px;
-    gap: 20px;
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
   }
 
-  .projectsHeaderText {
-    gap: 12px;
+  .headerActions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .sectionLabel {
@@ -620,82 +449,19 @@
     letter-spacing: 0.18em;
   }
 
-  .projectsTitle {
-    font-size: clamp(1.75rem, 6vw, 2.25rem);
+  .title {
+    font-size: clamp(1.625rem, 6vw, 2rem);
     line-height: 1.2;
   }
 
-  .projectsSub {
-    font-size: 0.9375rem;
-    line-height: 1.65;
-  }
-
-  .btnPrimary,
-  .btnGhost {
-    font-size: 0.8125rem;
-    padding: 10px 20px;
-  }
-
-  .projectsGrid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  /* Mobile-də 1 sütun olduğu üçün mərkəzləmə lazım deyil */
-  .projectsGrid > .projectCard:last-child:nth-child(odd) {
-    max-width: 100%;
-    grid-column: auto;
-  }
-
-  .projectContent {
-    padding: 20px;
-    gap: 10px;
-  }
-
-  .projectTitle {
-    font-size: 1.125rem;
-  }
-
-  .projectDesc {
-    font-size: 0.875rem;
+  .sub {
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 
-  .projectCard {
-    border-radius: 18px;
-  }
-
-  /* Pagination mobile */
-  .pagination {
-    gap: 12px;
-    margin-top: 40px;
-  }
-
-  .paginationBtn,
-  .paginationNumber {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 10px;
-  }
-
-  .paginationNumber {
-    font-size: 0.875rem;
-    padding: 0 10px;
-  }
-
-  .paginationNumbers {
-    gap: 4px;
-  }
-
-  .paginationDots {
-    min-width: 24px;
-    height: 40px;
-  }
-
-  .pageInfo {
-    font-size: 0.75rem;
-    margin-top: 12px;
+  .track {
+    grid-auto-columns: 82%;
+    --gap: var(--space-4);
   }
 }
 
@@ -704,95 +470,31 @@
    ============================================ */
 
 @media (max-width: 480px) {
-  .projects {
-    padding: var(--space-14) 0;
-  }
-
   .container {
     width: min(100%, calc(100% - 32px));
   }
 
-  .projectsHeader {
-    margin-bottom: 24px;
-    gap: 16px;
-  }
-
-  .projectsHeaderText {
-    gap: 10px;
-  }
-
-  .sectionLabel {
-    font-size: 0.6875rem;
-    letter-spacing: 0.16em;
-  }
-
-  .projectsTitle {
-    font-size: clamp(1.5rem, 7vw, 1.875rem);
-    line-height: 1.2;
-  }
-
-  .projectsSub {
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-
-  .projectsHeaderActions {
-    width: 100%;
-    flex-direction: column;
+  .headerActions {
+    flex-direction: column-reverse;
     align-items: stretch;
-    gap: 8px;
+    gap: var(--space-3);
   }
 
-  .btnPrimary,
   .btnGhost {
     width: 100%;
-    justify-content: center;
   }
 
-  .projectsGrid {
-    gap: 16px;
+  .navBtns {
+    justify-content: flex-end;
   }
 
-  .projectCard {
-    border-radius: 16px;
+  .track {
+    grid-auto-columns: 88%;
+    --gap: var(--space-3);
   }
 
-  .projectContent {
-    padding: 18px;
-    gap: 10px;
-  }
-
-  .projectTitle {
-    font-size: 1.0625rem;
-  }
-
-  .projectDesc {
-    font-size: 0.8125rem;
-    line-height: 1.55;
-  }
-
-  .projectOverlayIcon {
-    width: 48px;
-    height: 48px;
-  }
-
-  /* Pagination small mobile */
-  .pagination {
-    gap: 8px;
-    margin-top: 32px;
-  }
-
-  .paginationBtn,
-  .paginationNumber {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 8px;
-  }
-
-  .paginationNumber {
-    font-size: 0.8125rem;
-    padding: 0 8px;
+  .content {
+    padding: var(--space-4);
   }
 }
 
@@ -806,26 +508,18 @@
     animation: none;
   }
 
-  .projectCard,
-  .projectImage,
-  .projectOverlay,
-  .projectOverlayIcon,
-  .projectTitle,
-  .btnPrimary,
-  .btnGhost,
-  .paginationBtn,
-  .paginationNumber {
+  .track {
+    scroll-behavior: auto;
+  }
+
+  .card,
+  .image,
+  .navBtn,
+  .btnGhost {
     transition: none;
   }
 
-  .projectCard:hover,
-  .paginationBtn:hover,
-  .paginationNumber:hover,
-  .paginationNumberActive:hover {
-    transform: none;
-  }
-
-  .projectCard:hover .projectImage {
+  .card:hover .image {
     transform: none;
   }
 }

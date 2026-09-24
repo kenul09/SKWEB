@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 import Button from '../../components/ui/Button'
 import { useLanguage } from '../../hooks'
@@ -7,60 +8,139 @@ import { translations } from '../../translations'
 
 import styles from './Projects.module.css'
 
-/* ── Constants ── */
-const PROJECTS_PER_PAGE = 4
+const OVERFLOW_EPSILON = 2
 
-const getHostname = (url) => new URL(url).hostname
+function getHostname(url) {
+  try {
+    return new URL(url).hostname
+  } catch {
+    return ''
+  }
+}
 
-/* Two pairs of project cards currently reuse the same screenshot
-   (see src/translations/data.js) — this accent wash gives every card
-   a distinct identity until real per-project screenshots are added. */
-const CARD_ACCENTS = ['#6366f1', '#ec4899', '#14b8a6', '#f59e0b', '#8b5cf6']
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  )
+}
+
+function BrowserBar({ link, soonLabel }) {
+  const hostname = link ? getHostname(link) : ''
+
+  return (
+    <div className={styles.browserBar} aria-hidden="true">
+      <span className={styles.browserDot} />
+      <span className={styles.browserDot} />
+      <span className={styles.browserDot} />
+      <span className={styles.browserUrl}>{hostname || soonLabel}</span>
+    </div>
+  )
+}
+
+function ProjectCard({ project, buttons }) {
+  const hasLink = Boolean(project.link)
+  const Wrapper = hasLink ? 'a' : 'article'
+  const wrapperProps = hasLink
+    ? { href: project.link, target: '_blank', rel: 'noopener noreferrer' }
+    : {}
+
+  return (
+    <Wrapper className={styles.card} {...wrapperProps}>
+      <BrowserBar link={project.link} soonLabel={buttons.soon} />
+
+      <div className={styles.mediaBody}>
+        {project.img ? (
+          <img
+            src={project.img}
+            alt={project.title}
+            className={styles.image}
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className={styles.cover}
+            style={{ '--project-color': project.color }}
+          >
+            <span className={styles.coverTitle}>{project.title}</span>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.content}>
+        <span className={styles.type}>{project.type}</span>
+        <h3 className={styles.cardTitle}>{project.title}</h3>
+        <p className={styles.desc}>{project.desc}</p>
+        <span className={hasLink ? styles.visitLink : styles.soonLink}>
+          {hasLink ? (
+            <>
+              {buttons.visit}
+              <FiArrowUpRight aria-hidden="true" />
+            </>
+          ) : (
+            buttons.soon
+          )}
+        </span>
+      </div>
+    </Wrapper>
+  )
+}
 
 export default function Projects() {
   const { language } = useLanguage()
   const t = translations[language]
-  const [currentPage, setCurrentPage] = useState(1)
   const { scrollToSection } = useSmoothScroll()
 
-  /* =========================
-     PAGINATION LOGIC
-  ========================= */
+  const trackRef = useRef(null)
+  const [scrollState, setScrollState] = useState({
+    hasOverflow: false,
+    atStart: true,
+    atEnd: true,
+  })
 
-  const totalPages = Math.ceil(t.projects.cards.length / PROJECTS_PER_PAGE)
+  const updateScrollState = useCallback(() => {
+    const track = trackRef.current
+    if (!track) return
 
-  const paginatedProjects = useMemo(() => {
-    const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE
-    const endIndex = startIndex + PROJECTS_PER_PAGE
-    return t.projects.cards.slice(startIndex, endIndex)
-  }, [t.projects.cards, currentPage])
+    const { scrollLeft, scrollWidth, clientWidth } = track
+    const hasOverflow = scrollWidth - clientWidth > OVERFLOW_EPSILON
 
-  /* Səhifə dəyişəndə yuxarı scroll */
-  const handlePageChange = (page) => {
-    setCurrentPage(page)
-    document
-      .getElementById('projects')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+    setScrollState({
+      hasOverflow,
+      atStart: scrollLeft <= OVERFLOW_EPSILON,
+      atEnd: scrollLeft >= scrollWidth - clientWidth - OVERFLOW_EPSILON,
+    })
+  }, [])
 
-  /* Smart page numbers: 1 ... 4 5 6 ... 10 */
-  const getPageNumbers = () => {
-    const pages = []
-    const maxVisible = 5
+  useEffect(() => {
+    updateScrollState()
 
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i)
-    } else {
-      if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages)
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages)
-      } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages)
-      }
+    const track = trackRef.current
+    if (!track) return
+
+    window.addEventListener('resize', updateScrollState)
+    track.addEventListener('scroll', updateScrollState, { passive: true })
+
+    return () => {
+      window.removeEventListener('resize', updateScrollState)
+      track.removeEventListener('scroll', updateScrollState)
     }
+  }, [updateScrollState, language])
 
-    return pages
+  const scrollByCard = (direction) => {
+    const track = trackRef.current
+    if (!track) return
+
+    const firstSlide = track.querySelector(`.${styles.slide}`)
+    if (!firstSlide) return
+
+    const gap = parseFloat(getComputedStyle(track).columnGap || '0')
+    const distance = firstSlide.offsetWidth + gap
+
+    track.scrollBy({
+      left: direction * distance,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    })
   }
 
   return (
@@ -69,59 +149,49 @@ export default function Projects() {
       id="projects"
       aria-labelledby="projects-heading"
     >
-      {/* Decorative background */}
       <div className={styles.bgGlow} aria-hidden="true" />
 
       <div className={styles.container}>
         {/* ── HEADER ── */}
-        <header className={styles.projectsHeader}>
-          <div className={styles.projectsHeaderText}>
+        <header className={styles.header}>
+          <div className={styles.headerText}>
             <span className={styles.sectionLabel}>
               <span className={styles.labelDot} aria-hidden="true" />
               {t.projects.sectionLabel}
             </span>
 
-            <h2 id="projects-heading" className={styles.projectsTitle}>
-              {t.projects.titleTop}
-              <br />
-              {t.projects.titleBottom}{' '}
-              <span className={styles.titleAccent}>
-                {t.projects.titleAccent}
-              </span>
+            <h2 id="projects-heading" className={styles.title}>
+              {t.projects.title}
             </h2>
 
-            <p className={styles.projectsSub}>
-              {t.projects.sub.map((line, index) => (
-                <span key={index}>
-                  {line}
-                  {index !== t.projects.sub.length - 1 && <br />}
-                </span>
-              ))}
-            </p>
+            <p className={styles.sub}>{t.projects.sub}</p>
           </div>
 
-          {/* ── ACTION BUTTONS ── */}
-          <div className={styles.projectsHeaderActions}>
-            <Button
-              className={styles.btnPrimary}
-              onClick={() => handlePageChange(1)}
-            >
-              {t.projects.buttons.viewAll}
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Button>
+          <div className={styles.headerActions}>
+            {scrollState.hasOverflow && (
+              <div className={styles.navBtns}>
+                <button
+                  type="button"
+                  className={styles.navBtn}
+                  onClick={() => scrollByCard(-1)}
+                  disabled={scrollState.atStart}
+                  aria-label={t.projects.buttons.prev}
+                  aria-controls="projects-track"
+                >
+                  <FiChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  className={styles.navBtn}
+                  onClick={() => scrollByCard(1)}
+                  disabled={scrollState.atEnd}
+                  aria-label={t.projects.buttons.next}
+                  aria-controls="projects-track"
+                >
+                  <FiChevronRight size={20} />
+                </button>
+              </div>
+            )}
 
             <Button
               className={styles.btnGhost}
@@ -132,150 +202,20 @@ export default function Projects() {
           </div>
         </header>
 
-        {/* ── PROJECTS GRID ── */}
-        <div className={styles.projectsGrid}>
-          {paginatedProjects.map((project, index) => {
-            const globalIndex = t.projects.cards.indexOf(project)
-            const accent = CARD_ACCENTS[globalIndex % CARD_ACCENTS.length]
-
-            return (
-            <a
-              key={project.title + index}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.projectCard}
-              aria-label={`View project: ${project.title}`}
-              style={{ '--card-accent': accent }}
-            >
-              {/* Image with overlay */}
-              <div className={styles.projectImageWrapper}>
-                <div className="terminal-chrome" aria-hidden="true">
-                  <span className="terminal-dot terminal-dot-red" />
-                  <span className="terminal-dot terminal-dot-yellow" />
-                  <span className="terminal-dot terminal-dot-green" />
-                </div>
-                <img
-                  src={project.img}
-                  alt={project.title}
-                  className={styles.projectImage}
-                  loading="lazy"
-                />
-                <div className={styles.projectAccentWash} aria-hidden="true" />
-                <div className={styles.projectOverlay} aria-hidden="true">
-                  <span className={styles.projectOverlayIcon}>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className={styles.projectContent}>
-                <div className={styles.projectTitleRow}>
-                  <h3 className={styles.projectTitle}>{project.title}</h3>
-                  <span className={styles.projectUrl}>{getHostname(project.link)}</span>
-                </div>
-                <p className={styles.projectDesc}>{project.desc}</p>
-              </div>
-            </a>
-            )
-          })}
-        </div>
-
-        {/* ── PAGINATION ── */}
-        {totalPages > 1 && (
-          <nav
-            className={styles.pagination}
-            aria-label="Projects pagination"
-          >
-            {/* Previous button */}
-            <button
-              className={styles.paginationBtn}
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              aria-label="Previous page"
-              type="button"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-
-            {/* Page numbers */}
-            <div className={styles.paginationNumbers}>
-              {getPageNumbers().map((page, idx) =>
-                page === '...' ? (
-                  <span
-                    key={`dots-${idx}`}
-                    className={styles.paginationDots}
-                    aria-hidden="true"
-                  >
-                    ···
-                  </span>
-                ) : (
-                  <button
-                    key={page}
-                    className={`${styles.paginationNumber} ${
-                      currentPage === page ? styles.paginationNumberActive : ''
-                    }`}
-                    onClick={() => handlePageChange(page)}
-                    aria-label={`Go to page ${page}`}
-                    aria-current={currentPage === page ? 'page' : undefined}
-                    type="button"
-                  >
-                    {page}
-                  </button>
-                )
-              )}
-            </div>
-
-            {/* Next button */}
-            <button
-              className={styles.paginationBtn}
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              aria-label="Next page"
-              type="button"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-          </nav>
-        )}
+        {/* ── CAROUSEL ── */}
+        <ul
+          id="projects-track"
+          ref={trackRef}
+          className={styles.track}
+          tabIndex={0}
+          aria-label={t.projects.title}
+        >
+          {t.projects.cards.map((project) => (
+            <li key={project.title} className={styles.slide}>
+              <ProjectCard project={project} buttons={t.projects.buttons} />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
