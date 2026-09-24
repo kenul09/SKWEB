@@ -11,7 +11,8 @@
 
 .contact {
   position: relative;
-  padding: var(--space-30) 0;                   /* 8pt grid */
+  padding-top: var(--space-30);                 /* 8pt grid */
+  padding-bottom: var(--space-16);              /* tight against footer */
   background: transparent;
   overflow: hidden;
   color: var(--text-primary);
@@ -593,7 +594,8 @@
 
 @media (max-width: 1024px) {
   .contact {
-    padding: var(--space-24) 0;                  /* 8pt grid */
+    padding-top: var(--space-24);                /* 8pt grid */
+    padding-bottom: var(--space-14);
   }
 
   .container {
@@ -631,7 +633,8 @@
 
 @media (max-width: 768px) {
   .contact {
-    padding: var(--space-18) 0;                  /* 8pt grid */
+    padding-top: var(--space-18);                /* 8pt grid */
+    padding-bottom: var(--space-12);
   }
 
   .container {
@@ -716,7 +719,8 @@
 
 @media (max-width: 480px) {
   .contact {
-    padding: var(--space-14) 0;
+    padding-top: var(--space-14);
+    padding-bottom: var(--space-12);
   }
 
   .container {

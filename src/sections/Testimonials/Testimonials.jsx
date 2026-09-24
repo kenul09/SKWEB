@@ -1,10 +1,113 @@
-import styles from './Testimonials.module.css'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+
 import { useLanguage } from '../../hooks'
 import { translations } from '../../translations'
+
+import styles from './Testimonials.module.css'
+
+const AUTOPLAY_MS = 7000
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  )
+}
 
 export default function Testimonials() {
   const { language } = useLanguage()
   const t = translations[language]
+  const cards = t.testimonials.cards
+
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [userDriven, setUserDriven] = useState(false)
+  const [paused, setPaused] = useState(false)
+
+  const spotlightRef = useRef(null)
+  const hoverRef = useRef(false)
+  const focusRef = useRef(false)
+  const hiddenRef = useRef(
+    typeof document !== 'undefined' && document.visibilityState === 'hidden'
+  )
+
+  const recomputePaused = useCallback(() => {
+    setPaused(hoverRef.current || focusRef.current || hiddenRef.current)
+  }, [])
+
+  useEffect(() => {
+    const node = spotlightRef.current
+    if (!node) return undefined
+
+    const onEnter = () => {
+      hoverRef.current = true
+      recomputePaused()
+    }
+    const onLeave = () => {
+      hoverRef.current = false
+      recomputePaused()
+    }
+    const onFocusIn = () => {
+      focusRef.current = true
+      recomputePaused()
+    }
+    const onFocusOut = () => {
+      requestAnimationFrame(() => {
+        focusRef.current = node.contains(document.activeElement)
+        recomputePaused()
+      })
+    }
+    const onVisibility = () => {
+      hiddenRef.current = document.visibilityState === 'hidden'
+      recomputePaused()
+    }
+
+    node.addEventListener('mouseenter', onEnter)
+    node.addEventListener('mouseleave', onLeave)
+    node.addEventListener('focusin', onFocusIn)
+    node.addEventListener('focusout', onFocusOut)
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      node.removeEventListener('mouseenter', onEnter)
+      node.removeEventListener('mouseleave', onLeave)
+      node.removeEventListener('focusin', onFocusIn)
+      node.removeEventListener('focusout', onFocusOut)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [recomputePaused])
+
+  const goTo = useCallback((index) => {
+    setUserDriven(true)
+    setActiveIndex(index)
+  }, [])
+
+  const goNext = useCallback(
+    (isUserDriven) => {
+      setUserDriven(isUserDriven)
+      setActiveIndex((prev) => (prev + 1) % cards.length)
+    },
+    [cards.length]
+  )
+
+  const goPrev = useCallback(
+    (isUserDriven) => {
+      setUserDriven(isUserDriven)
+      setActiveIndex((prev) => (prev - 1 + cards.length) % cards.length)
+    },
+    [cards.length]
+  )
+
+  /* Autoplay — restarts on every activeIndex change, so a manual
+     navigation resets the 7s countdown for free. */
+  useEffect(() => {
+    if (paused || prefersReducedMotion()) return undefined
+
+    const timer = setInterval(() => goNext(false), AUTOPLAY_MS)
+    return () => clearInterval(timer)
+  }, [activeIndex, paused, goNext])
+
+  const active = cards[activeIndex]
 
   return (
     <section
@@ -12,89 +115,95 @@ export default function Testimonials() {
       id="testimonials"
       aria-labelledby="testimonials-heading"
     >
-      {/* Decorative background */}
-      <div className={styles.bgGlow} aria-hidden="true" />
-
       <div className={styles.container}>
-        {/* ── Header ── */}
-        <header className={styles.testHeader}>
-          <span className={styles.sectionLabel}>
-            <span className={styles.labelDot} aria-hidden="true" />
-            {t.testimonials.sectionLabel}
-          </span>
+        {/* ── HEADER ── */}
+        <header className={styles.header}>
+          <div className={styles.headerText}>
+            <span className={styles.sectionLabel}>
+              <span className={styles.labelDot} aria-hidden="true" />
+              {t.testimonials.sectionLabel}
+            </span>
 
-          <h2 id="testimonials-heading" className={styles.testTitle}>
-            {t.testimonials.title}
-          </h2>
+            <h2 id="testimonials-heading" className={styles.title}>
+              {t.testimonials.title}
+            </h2>
+          </div>
 
-          <p className={styles.testSub}>
-            {t.testimonials.sub}
-          </p>
+          <div className={styles.navBtns}>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => goPrev(true)}
+              aria-label={t.testimonials.buttons.prev}
+            >
+              <FiChevronLeft size={20} />
+            </button>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => goNext(true)}
+              aria-label={t.testimonials.buttons.next}
+            >
+              <FiChevronRight size={20} />
+            </button>
+          </div>
         </header>
 
-        {/* ── Grid ── */}
-        <div className={styles.testGrid} role="list">
-          {t.testimonials.cards.map((item, i) => (
-            <article
-              key={i}
-              className={styles.testCard}
-              role="listitem"
+        {/* ── SPOTLIGHT ── */}
+        <div className={styles.spotlight} ref={spotlightRef}>
+          <figure key={activeIndex} className={styles.quoteFigure}>
+            <span className={styles.quoteMark} aria-hidden="true">
+              &ldquo;
+            </span>
+
+            <blockquote
+              className={styles.quoteText}
+              aria-live={userDriven ? 'polite' : 'off'}
             >
-              {/* Quote icon */}
-              <svg
-                className={styles.quoteIcon}
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+              {active.text}
+            </blockquote>
+
+            <figcaption className={styles.quoteAuthor}>
+              <span
+                className={styles.avatarLg}
+                style={{ background: active.color }}
                 aria-hidden="true"
               >
-                <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
-              </svg>
+                {active.initials}
+              </span>
+              <span className={styles.authorInfo}>
+                <span className={styles.authorName}>{active.name}</span>
+                <span className={styles.authorRole}>{active.role}</span>
+              </span>
+            </figcaption>
+          </figure>
 
-              {/* Stars rating */}
-              <div
-                className={styles.testStars}
-                role="img"
-                aria-label={`${item.stars} out of 5 stars`}
+          <div className={styles.authorList}>
+            {cards.map((card, index) => (
+              <button
+                key={card.name}
+                type="button"
+                className={`${styles.authorRow} ${
+                  index === activeIndex ? styles.authorRowActive : ''
+                }`}
+                aria-pressed={index === activeIndex}
+                aria-label={`${card.name} — ${card.role}`}
+                onClick={() => goTo(index)}
               >
-                {[...Array(5)].map((_, idx) => (
-                  <svg
-                    key={idx}
-                    className={`${styles.star} ${idx < item.stars ? styles.starFilled : ''}`}
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                ))}
-              </div>
-
-              {/* Testimonial text */}
-              <blockquote className={styles.testText}>
-                {item.text}
-              </blockquote>
-
-              {/* Author */}
-              <footer className={styles.testAuthor}>
-                <div
-                  className={styles.testAvatar}
-                  style={{ background: item.color }}
+                <span
+                  className={styles.avatarSm}
+                  style={{ background: card.color }}
                   aria-hidden="true"
                 >
-                  {item.initials}
-                </div>
-
-                <div className={styles.testAuthorInfo}>
-                  <p className={styles.testName}>{item.name}</p>
-                  <p className={styles.testRole}>{item.role}</p>
-                </div>
-              </footer>
-            </article>
-          ))}
+                  {card.initials}
+                </span>
+                <span className={styles.authorRowInfo}>
+                  <span className={styles.authorRowName}>{card.name}</span>
+                  <span className={styles.authorRowRole}>{card.role}</span>
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
