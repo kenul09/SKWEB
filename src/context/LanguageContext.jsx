@@ -4,7 +4,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 const LanguageContext = createContext()
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useLocalStorage('language', 'en')
+  const [language, setLanguage] = useLocalStorage('language', 'az')
 
   /* Keeps <html lang> in sync so text-transform: uppercase uses the right
      locale rules (az: i → İ) and screen readers pick the right voice. */

@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { FiPenTool, FiCode, FiTarget, FiShoppingBag, FiChevronRight, FiCheck } from 'react-icons/fi'
+import { FiPenTool, FiCode, FiTarget, FiShoppingBag, FiChevronRight, FiCheck, FiArrowRight } from 'react-icons/fi'
 
 import { useLanguage, useResponsive, useSmoothScroll } from '../../hooks'
+import { BREAKPOINTS } from '../../config'
 import { translations } from '../../translations'
 
 import styles from './Services.module.css'
@@ -13,12 +14,10 @@ const ICONS = {
   ecommerce: FiShoppingBag,
 }
 
-const MOBILE_BREAKPOINT = 900
-
 export default function Services() {
   const { language } = useLanguage()
   const t = translations[language]
-  const { isMobile } = useResponsive(MOBILE_BREAKPOINT)
+  const { isMobile } = useResponsive(BREAKPOINTS.tabletPortrait)
   const { scrollTo } = useSmoothScroll()
 
   const cards = t.services.cards
@@ -198,6 +197,7 @@ function ServiceDetail({ card, includesLabel, cta, onRequest, panelId, tabId, mo
 
       <button type="button" className={styles.servicesCta} onClick={onRequest}>
         {cta}
+        <FiArrowRight className={styles.servicesCtaIcon} aria-hidden="true" />
       </button>
     </div>
   )

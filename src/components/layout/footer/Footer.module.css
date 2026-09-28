@@ -44,6 +44,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  min-height: 44px;                   /* touch target */
   text-decoration: none;
 }
 
@@ -197,7 +198,7 @@
   justify-content: center;
   gap: var(--space-2);
   flex-shrink: 0;
-  height: 40px;
+  min-height: 44px;
   padding: 8px 16px;
   font-family: inherit;
   font-size: 0.8125rem;
@@ -221,10 +222,10 @@
 }
 
 /* ============================================
-   RESPONSIVE — TABLET (1100px)
+   RESPONSIVE — TABLET (1024px)
    ============================================ */
 
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
   .container {
     width: min(100%, calc(100% - 64px));
   }
@@ -236,17 +237,17 @@
 }
 
 /* ============================================
-   RESPONSIVE — MOBILE (600px)
+   RESPONSIVE — MOBILE (768px)
    ============================================ */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer {
     padding-top: var(--space-8);
     padding-bottom: var(--space-5);
   }
 
   .container {
-    width: min(100%, calc(100% - 32px));
+    width: min(100%, calc(100% - 48px));
   }
 
   .topRow {
@@ -290,6 +291,16 @@
 
   .copyright {
     text-align: center;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL MOBILE (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .container {
+    width: min(100%, calc(100% - 32px));
   }
 }
 

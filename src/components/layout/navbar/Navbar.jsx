@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 import { useLanguage } from '../../../hooks'
 import useResponsive from '../../../hooks/useResponsive'
@@ -6,7 +6,7 @@ import useScrollEffect from '../../../hooks/useScrollEffect'
 import useSectionVisibility from '../../../hooks/useSectionVisibility'
 import useSmoothScroll from '../../../hooks/useSmoothScroll'
 
-import { SHOW_TESTIMONIALS } from '../../../config'
+import { BREAKPOINTS, SHOW_TESTIMONIALS } from '../../../config'
 import { translations } from '../../../translations'
 import LanguageSwitcher from '../../common/LanguageSwitcher'
 
@@ -17,7 +17,6 @@ const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimoni
   (link) => link !== 'testimonials' || SHOW_TESTIMONIALS
 )
 const SCROLL_THRESHOLD = 40
-const MOBILE_BREAKPOINT = 1024
 
 /* ── Component ── */
 export default function Navbar({ toggleTheme, theme }) {
@@ -25,9 +24,11 @@ export default function Navbar({ toggleTheme, theme }) {
   const t = translations[language]
 
   const [menuOpen, setMenuOpen] = useState(false)
+  const burgerRef = useRef(null)
+  const firstLinkRef = useRef(null)
 
   const scrolled = useScrollEffect(SCROLL_THRESHOLD)
-  const { isMobile } = useResponsive(MOBILE_BREAKPOINT)
+  const { isMobile } = useResponsive(BREAKPOINTS.tabletPortrait)
   const activeSection = useSectionVisibility(NAV_LINKS)
   const { scrollToSection } = useSmoothScroll()
 
@@ -44,14 +45,22 @@ export default function Navbar({ toggleTheme, theme }) {
     }
   }, [menuOpen])
 
-  /* ── Close menu on Escape key ── */
+  /* ── Move focus into the menu when it opens ── */
   useEffect(() => {
+    if (menuOpen) firstLinkRef.current?.focus()
+  }, [menuOpen])
+
+  /* ── Close menu on Escape key, returning focus to the burger ── */
+  useEffect(() => {
+    if (!menuOpen) return undefined
     const handleEsc = (e) => {
-      if (e.key === 'Escape') setMenuOpen(false)
+      if (e.key !== 'Escape') return
+      setMenuOpen(false)
+      burgerRef.current?.focus()
     }
     window.addEventListener('keydown', handleEsc)
     return () => window.removeEventListener('keydown', handleEsc)
-  }, [])
+  }, [menuOpen])
 
   const handleScrollTo = useCallback(
     (section) => {
@@ -156,6 +165,7 @@ export default function Navbar({ toggleTheme, theme }) {
             </button>
 
             <button
+              ref={burgerRef}
               className={`${styles.burgerMenu} ${menuOpen ? styles.burgerOpen : ''}`}
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-label={t.navbar.toggleMenu}
@@ -183,11 +193,14 @@ export default function Navbar({ toggleTheme, theme }) {
         className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}
         role="menu"
         aria-hidden={!menuOpen}
+        /* React 18 doesn't know `inert` as a boolean prop — pass a string */
+        inert={!menuOpen ? '' : undefined}
       >
         <div className={styles.mobileMenuInner}>
           {NAV_LINKS.map((link, index) => (
             <button
               key={link}
+              ref={index === 0 ? firstLinkRef : undefined}
               role="menuitem"
               className={`${styles.mobileLink} ${
                 activeSection === link ? styles.mobileLinkActive : ''

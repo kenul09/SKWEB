@@ -63,10 +63,14 @@
    RESPONSIVE — TABLET
 ========================= */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
+  .language-switcher {
+    gap: var(--space-1);
+  }
+
   .lang-btn {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     font-size: 13px;
     border-radius: 12px;
   }

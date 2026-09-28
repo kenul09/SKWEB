@@ -139,6 +139,39 @@
     0 0 60px var(--blue-glow);
 }
 
+/* =========================
+   PAUSE / PLAY
+========================= */
+
+.videoToggle {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+}
+
+.videoToggle:hover {
+  border-color: var(--border-hover);
+}
+
+.videoToggle:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 3px;
+}
+
 /* ============================================
    RESPONSIVE — TABLET (1024px)
    ============================================ */
@@ -175,6 +208,11 @@
    ============================================ */
 
 @media (max-width: 768px) {
+  .videoToggle {
+    width: 44px;                      /* touch target */
+    height: 44px;
+  }
+
   .skwebShowcase {
     padding: var(--space-16) 0;
   }
@@ -249,6 +287,7 @@
     animation: none;
   }
 
+  .videoToggle,
   .showcaseVideo {
     transition: none;
   }

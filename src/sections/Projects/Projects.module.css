@@ -432,16 +432,31 @@
     width: min(100%, calc(100% - 48px));
   }
 
-  .header {
+  /* Reorder: text → carousel → actions. The header box is flattened so its
+     two children can be ordered around the track. */
+  .container {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-5);
+  }
+
+  .header {
+    display: contents;
+  }
+
+  .headerText {
+    order: 1;
     margin-bottom: var(--space-6);
   }
 
+  .track {
+    order: 2;
+  }
+
   .headerActions {
+    order: 3;
     width: 100%;
     justify-content: space-between;
+    margin-top: var(--space-5);
   }
 
   .sectionLabel {
@@ -475,17 +490,14 @@
   }
 
   .headerActions {
-    flex-direction: column-reverse;
-    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
     gap: var(--space-3);
   }
 
   .btnGhost {
+    align-self: stretch;
     width: 100%;
-  }
-
-  .navBtns {
-    justify-content: flex-end;
   }
 
   .track {

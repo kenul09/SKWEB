@@ -246,30 +246,43 @@
 
 /* WhatsApp — sibling of the tel: link, never nested inside it */
 .whatsappBtn {
+  position: relative;
+  isolation: isolate;                 /* keeps the z-index:-1 circle inside the button */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  /* 44px hit area; the visible circle is the 36px ::before */
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   /* Centre on the value line: link's bottom padding + (value line box − button) / 2 */
-  margin-bottom: calc(var(--space-2) + (0.9375rem * 1.4 - 32px) / 2);
-  font-size: 16px;
+  margin-bottom: calc(var(--space-2) + (0.9375rem * 1.4 - 44px) / 2);
+  font-size: 18px;
   color: var(--text-secondary);
-  background: transparent;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: color var(--transition);
+}
+
+.whatsappBtn::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
   border: 1px solid var(--border);
   border-radius: 50%;
-  text-decoration: none;
   transition:
     background var(--transition),
-    border-color var(--transition),
-    color var(--transition);
+    border-color var(--transition);
 }
 
 .whatsappBtn:hover {
+  color: #fff;
+}
+
+.whatsappBtn:hover::before {
   background: #25d366;                /* WhatsApp brand */
   border-color: #25d366;
-  color: #fff;
 }
 
 .whatsappBtn:focus-visible {
@@ -781,9 +794,6 @@
     max-width: 100%;
   }
 
-  .formRow {
-    grid-template-columns: 1fr;
-  }
 
   .contactForm {
     padding: var(--space-6) var(--space-5);
@@ -811,6 +821,19 @@
 
   .successText {
     font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chipLabel {
+    min-height: 44px;                 /* touch target */
+  }
+}
+
+/* Name + Email stay side by side down to 600px */
+@media (max-width: 599px) {
+  .formRow {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -887,6 +910,7 @@
   .directIcon,
   .directValue,
   .whatsappBtn,
+  .whatsappBtn::before,
   .submitBtn,
   .submitBtn svg {
     transition: none;

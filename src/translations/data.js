@@ -18,7 +18,7 @@ export const translations = {
       valueProp: 'Bizneslər üçün sürətli, satış gətirən saytlar hazırlayıram.',
       desc: 'Frontend Developer və UI/UX dizayner kimi ideyanı dizayndan canlı sayta qədər özüm aparıram.',
       trust: [
-        { value: '5+', label: 'canlı layihə' },
+        { value: '4+', label: 'canlı layihə' },
         { value: '24 saat', label: 'ərzində cavab' },
         { value: 'AZ · EN · RU', label: 'dillərdə ünsiyyət' },
       ],
@@ -57,6 +57,8 @@ export const translations = {
       sectionLabel: 'Responsivlik',
       title: 'Hər ekranda eyni keyfiyyət',
       description: 'Masaüstü, tablet və mobil cihazlarda mükəmməl işləyən adaptiv dizayn.',
+      videoPause: 'Videonu dayandır',
+      videoPlay: 'Videonu oynat',
     },
     theme: {
       lightMode: 'İşıqlı Rejim',
@@ -66,7 +68,7 @@ export const translations = {
     services: {
       sectionLabel: 'Xidmətlərim',
       title: 'Nə təklif edirəm',
-      sub: 'Dizaynından developmentinə qədər, layihənizin hər mərhələsində sizinləyəm.',
+      sub: 'Dizayndan hazır sayta qədər layihənin hər mərhələsində yanınızdayam.',
       includesLabel: 'Nələr daxildir',
       cta: 'Bu xidməti sifariş et',
       cards: [
@@ -253,7 +255,7 @@ export const translations = {
       valueProp: 'I build fast websites that bring businesses more customers.',
       desc: 'As a frontend developer and UI/UX designer, I take your idea from design to a live site myself.',
       trust: [
-        { value: '5+', label: 'live projects' },
+        { value: '4+', label: 'live projects' },
         { value: '24h', label: 'response time' },
         { value: 'AZ · EN · RU', label: 'languages' },
       ],
@@ -292,6 +294,8 @@ export const translations = {
       sectionLabel: 'Responsiveness',
       title: 'The same quality on every screen',
       description: 'Responsive design that works perfectly across desktop, tablet, and mobile devices.',
+      videoPause: 'Pause video',
+      videoPlay: 'Play video',
     },
     theme: {
       lightMode: 'Light Mode',
@@ -301,7 +305,7 @@ export const translations = {
     services: {
       sectionLabel: 'My Services',
       title: 'What I offer',
-      sub: 'From design to development, I stay with your project at every stage.',
+      sub: "From design to a live website, I'm with you at every stage of your project.",
       includesLabel: "What's included",
       cta: 'Request this service',
       cards: [
@@ -488,7 +492,7 @@ export const translations = {
       valueProp: 'Создаю быстрые сайты, которые приводят бизнесу клиентов.',
       desc: 'Как frontend-разработчик и UI/UX дизайнер, сама веду проект от дизайна до готового сайта.',
       trust: [
-        { value: '5+', label: 'живых проектов' },
+        { value: '4+', label: 'живых проектов' },
         { value: '24 ч', label: 'на ответ' },
         { value: 'AZ · EN · RU', label: 'языки общения' },
       ],
@@ -527,6 +531,8 @@ export const translations = {
       sectionLabel: 'Адаптивность',
       title: 'Одинаковое качество на любом экране',
       description: 'Адаптивный дизайн, идеально работающий на десктопе, планшете и мобильных устройствах.',
+      videoPause: 'Остановить видео',
+      videoPlay: 'Воспроизвести видео',
     },
     theme: {
       lightMode: 'Светлый режим',
@@ -536,7 +542,7 @@ export const translations = {
     services: {
       sectionLabel: 'Мои услуги',
       title: 'Что я предлагаю',
-      sub: 'От дизайна до разработки — я рядом на каждом этапе вашего проекта.',
+      sub: 'От дизайна до готового сайта — я рядом на каждом этапе проекта.',
       includesLabel: 'Что входит',
       cta: 'Заказать эту услугу',
       cards: [
