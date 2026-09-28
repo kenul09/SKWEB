@@ -56,6 +56,10 @@
   --blue-dark:      #2d7fd6;
   --blue-glow:      rgba(77, 163, 255, 0.22);
   --blue-glow-sm:   rgba(77, 163, 255, 0.10);
+  /* Surfaces that carry white text — --blue-primary/--blue-dark are too
+     light here (2.6:1 / 4.1:1); these give 5.1:1 / 7.0:1 */
+  --blue-solid:      #1f6fc4;
+  --blue-solid-dark: #185a9e;
 
   --text-primary:   #f4f8ff;
   --text-secondary: #b8cbe0;
@@ -94,6 +98,9 @@
   --blue-dark:      #1565c0;
   --blue-glow:      rgba(25, 118, 210, 0.18);
   --blue-glow-sm:   rgba(25, 118, 210, 0.08);
+  /* White text on these: 4.6:1 / 5.75:1 */
+  --blue-solid:      #1976d2;
+  --blue-solid-dark: #1565c0;
 
   --text-primary:   #0a1930;
   --text-secondary: #42556b;

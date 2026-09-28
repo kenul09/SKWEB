@@ -2,12 +2,15 @@ import { FiArrowUp, FiGithub, FiInstagram, FiLinkedin } from 'react-icons/fi'
 
 import { useLanguage } from '../../../hooks'
 import useSmoothScroll from '../../../hooks/useSmoothScroll'
+import { SHOW_TESTIMONIALS } from '../../../config'
 import { translations } from '../../../translations'
 
 import styles from './Footer.module.css'
 
 /* ── Constants ── */
-const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact']
+const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact'].filter(
+  (link) => link !== 'testimonials' || SHOW_TESTIMONIALS
+)
 
 const SOCIAL_LINKS = [
   { key: 'github', label: 'GitHub', icon: FiGithub, href: 'https://github.com/kenul09' },
@@ -84,13 +87,6 @@ export default function Footer() {
                 SK<span className={styles.logoAccent}>WEB</span>
               </span>
             </a>
-
-            {t.footer.available && (
-              <span className={styles.availablePill}>
-                <span className={styles.availableDot} aria-hidden="true" />
-                {t.footer.available}
-              </span>
-            )}
           </div>
 
           {/* Nav links */}

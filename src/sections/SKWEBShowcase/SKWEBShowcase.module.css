@@ -5,33 +5,10 @@
 
 .skwebShowcase {
   position: relative;
-  padding: var(--space-30) 0;
+  padding: var(--space-24) 0;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: transparent;
   color: var(--text-primary);
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
-}
-
-/* =========================
-   DECORATIVE BACKGROUND
-========================= */
-
-.bgGlow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, var(--blue-glow), transparent 20%),
-    radial-gradient(circle at 80% 30%, var(--blue-glow-sm), transparent 25%);
-  pointer-events: none;
-  z-index: 0;
-  animation: floatGlow 14s ease-in-out infinite;
-}
-
-@keyframes floatGlow {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-20px, 20px); }
 }
 
 /* =========================
@@ -56,33 +33,27 @@
 }
 
 /* =========================
-   HEADER
+   HEADER — left aligned, same as Services / Projects
 ========================= */
 
 .showcaseHeader {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-start;
+  gap: var(--space-4);
 }
-
-/* =========================
-   SECTION LABEL (Hero & About ilə uyğun)
-========================= */
 
 .sectionLabel {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
   width: fit-content;
-  font-size: 0.8125rem; /* 13px */
+  font-size: 0.8125rem;
+  line-height: 1.4;
   font-weight: 700;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--blue-bright, #7dd3fc);
+  color: var(--blue-bright);
   margin: 0;
 }
 
@@ -90,10 +61,11 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: var(--blue-bright, #38bdf8);
+  background: var(--blue-bright);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--blue-bright, #38bdf8);
+  box-shadow: 0 0 12px var(--blue-glow);
   animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -101,56 +73,20 @@
   50% { transform: scale(1.4); opacity: 0.7; }
 }
 
-/* =========================
-   PILLS / TAGS
-========================= */
-
-.showcaseLabels {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.sectionPill {
-  padding: 10px 22px;
-  border-radius: 999px;
-  background: var(--blue-glow-sm);
-  color: var(--blue-bright);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease;
-}
-
-.sectionPill:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-hover);
-  background: var(--blue-glow);
-}
-
-.sectionPillSecondary {
-  background: var(--bg-card);
+.showcaseTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  margin: 0;
 }
-
-/* =========================
-   LEAD TEXT
-========================= */
 
 .showcaseLead {
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.75;
+  max-width: 56ch;
+  font-size: var(--text-base);
+  line-height: var(--lh-base);
   color: var(--text-secondary);
-  letter-spacing: -0.005em;
-  max-width: 620px;
   margin: 0;
 }
 
@@ -209,7 +145,7 @@
 
 @media (max-width: 1024px) {
   .skwebShowcase {
-    padding: var(--space-24) 0;
+    padding: var(--space-20) 0;
   }
 
   .container {
@@ -220,14 +156,8 @@
     gap: 48px;
   }
 
-  .showcaseHeader {
-    max-width: 680px;
-    gap: 18px;
-  }
-
-  .showcaseLead {
-    font-size: 1.0625rem; /* 17px */
-    line-height: 1.7;
+  .showcaseTitle {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
   }
 
   .showcaseVideoWrapper::before {
@@ -246,7 +176,7 @@
 
 @media (max-width: 768px) {
   .skwebShowcase {
-    padding: var(--space-18) 0;
+    padding: var(--space-16) 0;
   }
 
   .container {
@@ -257,30 +187,19 @@
     gap: 40px;
   }
 
-  .showcaseHeader {
-    gap: 16px;
-  }
-
   .sectionLabel {
-    font-size: 0.75rem; /* 12px */
-    letter-spacing: 0.25em;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
   }
 
-  .showcaseLabels {
-    gap: 10px;
-  }
-
-  .sectionPill {
-    font-size: 12px;
-    padding: 8px 18px;
-    letter-spacing: 0.1em;
+  .showcaseTitle {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+    line-height: 1.2;
   }
 
   .showcaseLead {
-    font-size: 1rem; /* 16px */
-    line-height: 1.7;
+    font-size: 0.9375rem;
   }
-
 
   .showcaseVideoWrapper {
     width: calc(100% - 24px);
@@ -298,10 +217,6 @@
    ============================================ */
 
 @media (max-width: 480px) {
-  .skwebShowcase {
-    padding: var(--space-14) 0;
-  }
-
   .container {
     width: min(100%, calc(100% - 32px));
   }
@@ -310,28 +225,9 @@
     gap: 32px;
   }
 
-  .showcaseHeader {
-    gap: 14px;
-  }
-
-  .sectionLabel {
-    font-size: 0.6875rem; /* 11px */
-    letter-spacing: 0.2em;
-  }
-
-  .showcaseLabels {
-    gap: 8px;
-  }
-
-  .sectionPill {
-    font-size: 11px;
-    padding: 7px 16px;
-    letter-spacing: 0.08em;
-  }
-
-  .showcaseLead {
-    font-size: 0.9375rem; /* 15px */
-    line-height: 1.65;
+  .showcaseTitle {
+    font-size: clamp(1.5rem, 7vw, 1.875rem);
+    line-height: 1.2;
   }
 
   .showcaseVideoWrapper::before {
@@ -349,12 +245,10 @@
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .bgGlow,
   .labelDot {
     animation: none;
   }
 
-  .sectionPill,
   .showcaseVideo {
     transition: none;
   }

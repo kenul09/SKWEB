@@ -15,28 +15,20 @@ export default function SKWEBShowcase() {
       id="responsiveness"
       aria-labelledby="showcase-heading"
     >
-      {/* Decorative background */}
-      <div className={styles.bgGlow} aria-hidden="true" />
-
       <div className={styles.container}>
         <div className={styles.showcaseGrid}>
           {/* ── Header ── */}
           <header className={styles.showcaseHeader}>
             <span className={styles.sectionLabel}>
               <span className={styles.labelDot} aria-hidden="true" />
-              {t.showcase.brand}
+              {t.showcase.sectionLabel}
             </span>
 
-            <div className={styles.showcaseLabels}>
-              <span className={`${styles.sectionPill} ${styles.sectionPillSecondary}`}>
-                {t.showcase.feature}
-              </span>
-            </div>
+            <h2 id="showcase-heading" className={styles.showcaseTitle}>
+              {t.showcase.title}
+            </h2>
 
-            <p
-              id="showcase-heading"
-              className={styles.showcaseLead}
-            >
+            <p className={styles.showcaseLead}>
               {t.showcase.description}
             </p>
           </header>

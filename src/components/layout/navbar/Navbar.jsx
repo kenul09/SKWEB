@@ -6,13 +6,16 @@ import useScrollEffect from '../../../hooks/useScrollEffect'
 import useSectionVisibility from '../../../hooks/useSectionVisibility'
 import useSmoothScroll from '../../../hooks/useSmoothScroll'
 
+import { SHOW_TESTIMONIALS } from '../../../config'
 import { translations } from '../../../translations'
 import LanguageSwitcher from '../../common/LanguageSwitcher'
 
 import styles from './Navbar.module.css'
 
 /* ── Constants ── */
-const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact']
+const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact'].filter(
+  (link) => link !== 'testimonials' || SHOW_TESTIMONIALS
+)
 const SCROLL_THRESHOLD = 40
 const MOBILE_BREAKPOINT = 1024
 

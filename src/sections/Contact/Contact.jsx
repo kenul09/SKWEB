@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
+import { FaWhatsapp } from 'react-icons/fa'
 import { FiInstagram, FiMail, FiPhone, FiSend } from 'react-icons/fi'
 
 import { useLanguage } from '../../hooks'
@@ -102,7 +103,7 @@ export default function Contact() {
 
   const directLinks = [
     { key: 'email', icon: FiMail, href: 'mailto:kenul94@mail.ru', value: 'kenul94@mail.ru' },
-    { key: 'phone', icon: FiPhone, href: 'tel:+994503417069', value: '+994 50 341 70 69' },
+    { key: 'phone', icon: FiPhone, href: 'tel:+994503417069', value: '+994 50 341 70 69', whatsapp: 'https://wa.me/994503417069' },
     { key: 'instagram', icon: FiInstagram, href: 'https://instagram.com/s.k_web', value: '@s.k_web', external: true },
   ]
 
@@ -137,8 +138,8 @@ export default function Contact() {
             <div className={styles.infoBlock}>
               <h3 className={styles.infoTitle}>{t.contact.directTitle}</h3>
               <ul className={styles.directList}>
-                {directLinks.map(({ key, icon: Icon, href, value, external }) => (
-                  <li key={key}>
+                {directLinks.map(({ key, icon: Icon, href, value, external, whatsapp }) => (
+                  <li key={key} className={styles.directItem}>
                     <a
                       href={href}
                       className={styles.directLink}
@@ -152,6 +153,18 @@ export default function Contact() {
                         <span className={styles.directValue}>{value}</span>
                       </span>
                     </a>
+                    {whatsapp && (
+                      <a
+                        href={whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.whatsappBtn}
+                        aria-label={t.contact.whatsappLabel}
+                        title={t.contact.whatsappLabel}
+                      >
+                        <FaWhatsapp aria-hidden="true" />
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

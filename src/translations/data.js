@@ -14,17 +14,48 @@ export const translations = {
       testimonials: 'Rəylər',
       contact: 'Əlaqə',
     },
-    heroTitle: 'SALAM, MƏN',
-    heroSubtitle: 'Müasir, adaptiv və istifadəçi dostu veb-saytlar yaradan Frontend Developer.',
+    hero: {
+      valueProp: 'Bizneslər üçün sürətli, satış gətirən saytlar hazırlayıram.',
+      desc: 'Frontend Developer və UI/UX dizayner kimi ideyanı dizayndan canlı sayta qədər özüm aparıram.',
+      trust: [
+        { value: '5+', label: 'canlı layihə' },
+        { value: '24 saat', label: 'ərzində cavab' },
+        { value: 'AZ · EN · RU', label: 'dillərdə ünsiyyət' },
+      ],
+    },
     startProject: 'Layihəyə Başla',
     viewWorks: 'İşlərimə Bax',
     about: {
-      title: 'Haqqımda',
-      text: 'Mən müasir, əlçatan və performansı yüksək veb-saytlar hazırlayıram, istifadəçi təcrübəsinə önəm verirəm.',
+      sectionLabel: 'Haqqında',
+      title: 'Mən kiməm',
+      paragraphs: [
+        '[Neçə ildir veb sahəsindəsən və necə başlamısan, 1-2 cümlə.]',
+        '[Hansı növ müştərilərlə işləyirsən və onlarla işləmə tərzin, 1-2 cümlə.]',
+      ],
+      principles: ['Sürət', 'İstifadəçi rahatlığı', 'Hər ekrana uyğun'],
+      toolsTitle: 'Hansı alətlərlə işləyirəm',
+      toolGroups: [
+        {
+          title: 'Frontend',
+          items: ['React', 'Next.js', 'TypeScript', 'JavaScript'],
+        },
+        {
+          title: 'Mobil',
+          items: ['React Native'],
+        },
+        {
+          title: 'Stil',
+          items: ['CSS Modules', 'Tailwind CSS', 'HTML5'],
+        },
+        {
+          title: 'Dizayn və alətlər',
+          items: ['Figma', 'Git', 'Zustand'],
+        },
+      ],
     },
     showcase: {
-      brand: 'SKWEB',
-      feature: 'Responsivlik',
+      sectionLabel: 'Responsivlik',
+      title: 'Hər ekranda eyni keyfiyyət',
       description: 'Masaüstü, tablet və mobil cihazlarda mükəmməl işləyən adaptiv dizayn.',
     },
     theme: {
@@ -92,7 +123,7 @@ export const translations = {
     projects: {
       sectionLabel: 'Layihələr',
       title: 'Seçilmiş işlər',
-      sub: 'Müasir, premium interfeyslər və real nəticə verən funksional həllər.',
+      sub: 'Real istifadəçilər üçün hazırladığım saytlar. Hər birinə canlı baxa bilərsiniz.',
       buttons: {
         collaborate: 'Birlikdə işləyək',
         visit: 'Sayta bax',
@@ -110,7 +141,7 @@ export const translations = {
           link: 'https://cvgenerateapp.vercel.app/',
         },
         {
-          title: 'Social Media Dashboard UI/UX',
+          title: 'Social Media Dashboard',
           type: 'UI/UX dizayn',
           desc: 'Daha yüksək cəlb etmək üçün təmiz dashboard dizaynı.',
           color: '#3b82f6',
@@ -126,7 +157,7 @@ export const translations = {
           link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
-          title: 'Film Platforması UI/UX',
+          title: 'Film Platforması',
           type: 'UI/UX dizayn',
           desc: 'Filmlər və seriallar üçün cəlbedici UI/UX dizaynı.',
           color: '#ec4899',
@@ -150,55 +181,12 @@ export const translations = {
         prev: 'Əvvəlki rəy',
         next: 'Növbəti rəy',
       },
-      cards: [
-        {
-          name: 'James Carter',
-          role: 'CEO, TechVentures',
-          text: 'Konul brendimizi əla təmsil edən veb-sayt hazırladı. Detallara diqqət və dönüşüm fokuslu dizayn bütün gözləntiləri üstələdi.',
-          initials: 'JC',
-          color: '#1565C0',
-        },
-        {
-          name: 'Sophia Bennett',
-          role: 'Founder, StyleHub',
-          text: 'Konulla işləmək çox rahat bir təcrübə oldu. O, bizim vizyonumuzu dərhal anladı və onu yüksək performanslı vebə çevirdi.',
-          initials: 'SB',
-          color: '#6A1B9A',
-        },
-        {
-          name: 'Liam Anderson',
-          role: 'Marketing Director',
-          text: 'Konul üçün hazırlanan sayt ilk ayda dönüşüm faizimizi üçə qatladı. Sürətli, gözəl və SEO-optimallaşdırılmış bir iş.',
-          initials: 'LA',
-          color: '#0D47A1',
-        },
-        {
-          name: 'Maria Gonzalez',
-          role: 'E-commerce Owner',
-          text: 'Mağazamız heç vaxt bu qədər peşəkar görünməmişdi. Konulun UX və veb inkişaf bacarıqları əvəzedilməzdir.',
-          initials: 'MG',
-          color: '#00695C',
-        },
-        {
-          name: 'David Kim',
-          role: 'Startup Founder',
-          text: 'Sürətli çatdırılma, təmiz kod və fərqlənən dizayn. Konul briefi mükəmməl anladı və gözləntilərimizi aşdı.',
-          initials: 'DK',
-          color: '#1B5E20',
-        },
-        {
-          name: 'Emma Clarke',
-          role: 'Brand Strategist',
-          text: 'Wireframe-dən launch-a qədər proses şəffaf və səliqəli idi. Son məhsul həm mobil, həm də masaüstü üçün mükəmməl uyğunlaşdırıldı.',
-          initials: 'EC',
-          color: '#BF360C',
-        },
-      ],
+      cards: [],
     },
     contact: {
       sectionLabel: 'Əlaqə',
       title: 'Layihənizi başladaq',
-      desc: 'Layihəniz haqqında qısa yazın, 24 saat ərzində sizə cavab verim.',
+      desc: 'Layihəniz haqqında bir neçə cümlə yazın, qalanını birlikdə planlaşdıraq.',
       placeholders: {
         name: 'Ad',
         email: 'E-poçt',
@@ -215,6 +203,7 @@ export const translations = {
         phone: 'Telefon / WhatsApp',
         instagram: 'Instagram',
       },
+      whatsappLabel: 'WhatsApp-da yaz',
       stepsTitle: 'Göndərdikdən sonra',
       steps: [
         '24 saat ərzində cavab verirəm',
@@ -260,17 +249,48 @@ export const translations = {
       testimonials: 'Testimonials',
       contact: 'Contact',
     },
-    heroTitle: "HELLO, I'M",
-    heroSubtitle: 'Modern frontend developer crafting premium SaaS dashboards and polished UI experiences.',
+    hero: {
+      valueProp: 'I build fast websites that bring businesses more customers.',
+      desc: 'As a frontend developer and UI/UX designer, I take your idea from design to a live site myself.',
+      trust: [
+        { value: '5+', label: 'live projects' },
+        { value: '24h', label: 'response time' },
+        { value: 'AZ · EN · RU', label: 'languages' },
+      ],
+    },
     startProject: 'Start Project',
     viewWorks: 'View My Work',
     about: {
-      title: 'About Me',
-      text: 'I build modern, accessible websites with clean code and strong user experience.',
+      sectionLabel: 'About',
+      title: 'Who I am',
+      paragraphs: [
+        '[How many years you\'ve been working on the web and how you started, 1–2 sentences.]',
+        '[What kind of clients you work with and how you work with them, 1–2 sentences.]',
+      ],
+      principles: ['Speed', 'Ease of use', 'Fits every screen'],
+      toolsTitle: 'Tools I work with',
+      toolGroups: [
+        {
+          title: 'Frontend',
+          items: ['React', 'Next.js', 'TypeScript', 'JavaScript'],
+        },
+        {
+          title: 'Mobile',
+          items: ['React Native'],
+        },
+        {
+          title: 'Styling',
+          items: ['CSS Modules', 'Tailwind CSS', 'HTML5'],
+        },
+        {
+          title: 'Design & tools',
+          items: ['Figma', 'Git', 'Zustand'],
+        },
+      ],
     },
     showcase: {
-      brand: 'SKWEB',
-      feature: 'Responsiveness',
+      sectionLabel: 'Responsiveness',
+      title: 'The same quality on every screen',
       description: 'Responsive design that works perfectly across desktop, tablet, and mobile devices.',
     },
     theme: {
@@ -338,7 +358,7 @@ export const translations = {
     projects: {
       sectionLabel: 'Projects',
       title: 'Selected Work',
-      sub: 'Modern, premium interfaces and functional solutions that deliver real results.',
+      sub: "Websites I've built for real users. Each one is live — try it yourself.",
       buttons: {
         collaborate: "Let's Work Together",
         visit: 'Visit site',
@@ -356,7 +376,7 @@ export const translations = {
           link: 'https://cvgenerateapp.vercel.app/',
         },
         {
-          title: 'Social Media Dashboard UI/UX',
+          title: 'Social Media Dashboard',
           type: 'UI/UX Design',
           desc: 'A clean and modern dashboard design for better engagement.',
           color: '#3b82f6',
@@ -372,7 +392,7 @@ export const translations = {
           link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
-          title: 'Film Platform UI/UX',
+          title: 'Film Platform',
           type: 'UI/UX Design',
           desc: 'An immersive UI/UX design for movies and TV series.',
           color: '#ec4899',
@@ -396,55 +416,12 @@ export const translations = {
         prev: 'Previous review',
         next: 'Next review',
       },
-      cards: [
-        {
-          name: 'James Carter',
-          role: 'CEO, TechVentures',
-          text: 'Konul delivered an exceptional website that truly represents our brand. The attention to detail and conversion-focused design exceeded all expectations.',
-          initials: 'JC',
-          color: '#1565C0',
-        },
-        {
-          name: 'Sophia Bennett',
-          role: 'Founder, StyleHub',
-          text: 'Working with Konul was a seamless experience. She understood our vision immediately and transformed it into a stunning, high-performing website.',
-          initials: 'SB',
-          color: '#6A1B9A',
-        },
-        {
-          name: 'Liam Anderson',
-          role: 'Marketing Director',
-          text: 'The website Konul built for us tripled our conversion rate within the first month. Incredible work — fast, beautiful, and SEO-optimised from day one.',
-          initials: 'LA',
-          color: '#0D47A1',
-        },
-        {
-          name: 'Maria Gonzalez',
-          role: 'E-commerce Owner',
-          text: "Our store has never looked better. Konul's expertise in web development and UX design is unmatched. Highly recommend her services!",
-          initials: 'MG',
-          color: '#00695C',
-        },
-        {
-          name: 'David Kim',
-          role: 'Startup Founder',
-          text: 'Fast delivery, clean code, and a design that genuinely stands out. Konul understood the brief perfectly and delivered beyond what we hoped for.',
-          initials: 'DK',
-          color: '#1B5E20',
-        },
-        {
-          name: 'Emma Clarke',
-          role: 'Brand Strategist',
-          text: 'From wireframe to launch, the process was smooth and transparent. The final product is polished, responsive, and exactly what our clients needed.',
-          initials: 'EC',
-          color: '#BF360C',
-        },
-      ],
+      cards: [],
     },
     contact: {
       sectionLabel: 'Contact me',
       title: "Let's start your project",
-      desc: "Tell me briefly about your project and I'll get back to you within 24 hours.",
+      desc: "Tell me about your project in a few sentences, and we'll plan the rest together.",
       placeholders: {
         name: 'Name',
         email: 'Email',
@@ -461,6 +438,7 @@ export const translations = {
         phone: 'Phone / WhatsApp',
         instagram: 'Instagram',
       },
+      whatsappLabel: 'Message on WhatsApp',
       stepsTitle: 'After you send',
       steps: [
         'I reply within 24 hours',
@@ -506,17 +484,48 @@ export const translations = {
       testimonials: 'Отзывы',
       contact: 'Контакт',
     },
-    heroTitle: 'ПРИВЕТ, Я',
-    heroSubtitle: 'Современный frontend-разработчик, создающий премиальные SaaS-дашборды и чистый UI.',
+    hero: {
+      valueProp: 'Создаю быстрые сайты, которые приводят бизнесу клиентов.',
+      desc: 'Как frontend-разработчик и UI/UX дизайнер, сама веду проект от дизайна до готового сайта.',
+      trust: [
+        { value: '5+', label: 'живых проектов' },
+        { value: '24 ч', label: 'на ответ' },
+        { value: 'AZ · EN · RU', label: 'языки общения' },
+      ],
+    },
     startProject: 'Начать проект',
     viewWorks: 'Посмотреть работы',
     about: {
-      title: 'Обо мне',
-      text: 'Я создаю современные, доступные веб-сайты с чистым кодом и сильным пользовательским опытом.',
+      sectionLabel: 'Обо мне',
+      title: 'Кто я',
+      paragraphs: [
+        '[Сколько лет вы в веб-разработке и с чего начинали, 1–2 предложения.]',
+        '[С какими клиентами вы работаете и как строите работу с ними, 1–2 предложения.]',
+      ],
+      principles: ['Скорость', 'Удобство для пользователя', 'Под любой экран'],
+      toolsTitle: 'С какими инструментами работаю',
+      toolGroups: [
+        {
+          title: 'Frontend',
+          items: ['React', 'Next.js', 'TypeScript', 'JavaScript'],
+        },
+        {
+          title: 'Мобильная разработка',
+          items: ['React Native'],
+        },
+        {
+          title: 'Стили',
+          items: ['CSS Modules', 'Tailwind CSS', 'HTML5'],
+        },
+        {
+          title: 'Дизайн и инструменты',
+          items: ['Figma', 'Git', 'Zustand'],
+        },
+      ],
     },
     showcase: {
-      brand: 'SKWEB',
-      feature: 'Адаптивность',
+      sectionLabel: 'Адаптивность',
+      title: 'Одинаковое качество на любом экране',
       description: 'Адаптивный дизайн, идеально работающий на десктопе, планшете и мобильных устройствах.',
     },
     theme: {
@@ -584,7 +593,7 @@ export const translations = {
     projects: {
       sectionLabel: 'Проекты',
       title: 'Избранные работы',
-      sub: 'Современные, премиальные интерфейсы и функциональные решения с реальным результатом.',
+      sub: 'Сайты, которые я сделала для реальных пользователей. Каждый можно открыть вживую.',
       buttons: {
         collaborate: 'Давайте работать вместе',
         visit: 'Посмотреть сайт',
@@ -602,7 +611,7 @@ export const translations = {
           link: 'https://cvgenerateapp.vercel.app/',
         },
         {
-          title: 'Дашборд социальных сетей UI/UX',
+          title: 'Дашборд социальных сетей',
           type: 'UI/UX дизайн',
           desc: 'Чистый и современный дизайн для лучшего вовлечения.',
           color: '#3b82f6',
@@ -618,7 +627,7 @@ export const translations = {
           link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
-          title: 'Платформа для фильмов UI/UX',
+          title: 'Кино-платформа',
           type: 'UI/UX дизайн',
           desc: 'Погружающий UI/UX для кино и сериалов.',
           color: '#ec4899',
@@ -642,55 +651,12 @@ export const translations = {
         prev: 'Предыдущий отзыв',
         next: 'Следующий отзыв',
       },
-      cards: [
-        {
-          name: 'James Carter',
-          role: 'CEO, TechVentures',
-          text: 'Конул создала исключительный сайт, который действительно представляет наш бренд. Внимание к деталям и дизайн с ориентиром на конверсию превзошли все ожидания.',
-          initials: 'JC',
-          color: '#1565C0',
-        },
-        {
-          name: 'Sophia Bennett',
-          role: 'Founder, StyleHub',
-          text: 'Работа с Конул была плавной и понятной. Она сразу поняла наш образ и превратила его в красивый, эффективный сайт.',
-          initials: 'SB',
-          color: '#6A1B9A',
-        },
-        {
-          name: 'Liam Anderson',
-          role: 'Marketing Director',
-          text: 'Сайт, который создала Конул, утроил наш коэффициент конверсии за первый месяц. Быстро, красиво и SEO-оптимизировано.',
-          initials: 'LA',
-          color: '#0D47A1',
-        },
-        {
-          name: 'Maria Gonzalez',
-          role: 'E-commerce Owner',
-          text: 'Наш магазин никогда не выглядел лучше. Экспертиза Конул в веб-разработке и UX безупречна.',
-          initials: 'MG',
-          color: '#00695C',
-        },
-        {
-          name: 'David Kim',
-          role: 'Startup Founder',
-          text: 'Быстрая доставка, чистый код и дизайн, который действительно выделяется. Конул поняла задачу и сделала больше, чем мы ожидали.',
-          initials: 'DK',
-          color: '#1B5E20',
-        },
-        {
-          name: 'Emma Clarke',
-          role: 'Brand Strategist',
-          text: 'От wireframe до запуска процесс был гладким и прозрачным. Итоговый продукт аккуратно подходит для мобильных и десктопа.',
-          initials: 'EC',
-          color: '#BF360C',
-        },
-      ],
+      cards: [],
     },
     contact: {
       sectionLabel: 'Свяжитесь со мной',
       title: 'Давайте начнём ваш проект',
-      desc: 'Коротко расскажите о проекте — я отвечу в течение 24 часов.',
+      desc: 'Опишите проект в паре предложений, а остальное спланируем вместе.',
       placeholders: {
         name: 'Имя',
         email: 'Email',
@@ -707,6 +673,7 @@ export const translations = {
         phone: 'Телефон / WhatsApp',
         instagram: 'Instagram',
       },
+      whatsappLabel: 'Написать в WhatsApp',
       stepsTitle: 'После отправки',
       steps: [
         'Отвечаю в течение 24 часов',

@@ -1,4 +1,5 @@
 import { useThemeContext } from './context/ThemeContext'
+import { SHOW_TESTIMONIALS } from './config'
 
 import Navbar from './components/layout/navbar'
 import Footer from './components/layout/footer'
@@ -24,7 +25,7 @@ export default function App() {
         <SKWEBShowcase />
         <Services />
         <Projects />
-        <Testimonials />
+        {SHOW_TESTIMONIALS && <Testimonials />}
         <Contact />
       </main>
 

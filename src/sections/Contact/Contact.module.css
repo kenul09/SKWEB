@@ -7,7 +7,7 @@
 
 .contact {
   position: relative;
-  padding-top: var(--space-24);
+  padding-top: var(--space-16);
   padding-bottom: var(--space-16);              /* tight against footer */
   background: transparent;
   overflow: hidden;
@@ -171,7 +171,16 @@
   padding: 0;
 }
 
+.directItem {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;              /* WhatsApp aligns to the number line, not the label */
+  gap: var(--space-3);
+}
+
 .directLink {
+  flex: 0 1 auto;                     /* only as wide as its content, so WhatsApp sits right after the number */
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -233,6 +242,39 @@
 
 .directLink:hover .directValue {
   color: var(--blue-primary);
+}
+
+/* WhatsApp — sibling of the tel: link, never nested inside it */
+.whatsappBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  /* Centre on the value line: link's bottom padding + (value line box − button) / 2 */
+  margin-bottom: calc(var(--space-2) + (0.9375rem * 1.4 - 32px) / 2);
+  font-size: 16px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  text-decoration: none;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.whatsappBtn:hover {
+  background: #25d366;                /* WhatsApp brand */
+  border-color: #25d366;
+  color: #fff;
+}
+
+.whatsappBtn:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 3px;
 }
 
 /* Next steps — numbered dots joined by a vertical line */
@@ -469,8 +511,8 @@
 }
 
 .chipInput:checked + .chipLabel {
-  background: var(--blue-primary);
-  border-color: var(--blue-primary);
+  background: var(--blue-solid);
+  border-color: var(--blue-solid);
   color: #fff;
 }
 
@@ -499,20 +541,19 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #fff;
-  background: var(--blue-primary);
+  background: linear-gradient(135deg, var(--blue-solid), var(--blue-solid-dark));
   border: none;
   border-radius: 999px;
   cursor: pointer;
   box-shadow: 0 8px 24px var(--blue-glow);
   transition:
     transform 0.25s ease,
-    background 0.25s ease,
     box-shadow 0.25s ease,
     opacity 0.25s ease;
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--blue-dark);
+  box-shadow: 0 12px 32px var(--blue-glow);
   transform: translateY(-2px);
 }
 
@@ -660,7 +701,7 @@
 
 @media (max-width: 1024px) {
   .contact {
-    padding-top: var(--space-20);
+    padding-top: var(--space-14);
     padding-bottom: var(--space-14);
   }
 
@@ -702,7 +743,7 @@
 
 @media (max-width: 768px) {
   .contact {
-    padding-top: var(--space-16);
+    padding-top: var(--space-12);
     padding-bottom: var(--space-12);
   }
 
@@ -845,6 +886,7 @@
   .chipLabel,
   .directIcon,
   .directValue,
+  .whatsappBtn,
   .submitBtn,
   .submitBtn svg {
     transition: none;

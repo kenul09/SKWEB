@@ -127,6 +127,11 @@
   box-shadow: var(--shadow-card);
 }
 
+/* ≤3 reviews: no side list, quote spans the full width */
+.spotlightSingle {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 /* =========================
    QUOTE (left)
 ========================= */
@@ -135,7 +140,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-5);
   padding: var(--space-10);
   margin: 0;
@@ -150,12 +155,13 @@
 
 .quoteMark {
   display: block;
-  font-size: 4.5rem;
+  height: 0.5em;                      /* glyph sits high in its box — trim the empty lower half */
+  font-size: 4rem;
   line-height: 1;
   font-weight: 800;
   color: var(--blue-bright);
   opacity: 0.15;
-  margin-bottom: calc(-1 * var(--space-4));
+  margin-bottom: var(--space-2);
   user-select: none;
 }
 
@@ -164,7 +170,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: var(--text-primary);
-  max-width: 60ch;
+  max-width: 56ch;
   margin: 0;
 }
 
@@ -202,6 +208,30 @@
   color: var(--text-primary);
 }
 
+.authorLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.authorLink:hover {
+  color: var(--blue-primary);
+}
+
+.authorLink:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+}
+
+.authorLinkIcon {
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 .authorRole {
   font-size: var(--text-sm);
   color: var(--text-muted);
@@ -224,7 +254,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   background: transparent;
   border: none;
   border-left: 3px solid transparent;
@@ -287,6 +317,62 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* =========================
+   DOT INDICATORS (≤3 reviews)
+========================= */
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+/* 8px visual dot inside a 24px hit area */
+.dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border-hover);
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.dot:hover::before {
+  background: var(--text-muted);
+}
+
+.dotActive {
+  width: 32px;
+}
+
+.dotActive::before,
+.dotActive:hover::before {
+  width: 24px;
+  background: var(--blue-primary);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 2px;
+  border-radius: 999px;
 }
 
 /* ============================================
@@ -409,7 +495,9 @@
 
   .navBtn,
   .authorRow,
-  .avatarSm {
+  .avatarSm,
+  .authorLink,
+  .dot::before {
     transition: none;
   }
 }

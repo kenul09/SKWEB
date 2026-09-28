@@ -164,7 +164,7 @@
   gap: var(--space-2);
   flex-shrink: 0;
   min-height: 44px;
-  padding: var(--space-3) var(--space-6);
+  padding: 10px 22px;
   font-family: inherit;
   font-size: var(--text-sm);
   font-weight: 600;
@@ -172,7 +172,7 @@
   color: var(--text-primary);
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
