@@ -11,7 +11,7 @@ const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimoni
 
 const SOCIAL_LINKS = [
   { key: 'github', label: 'GitHub', icon: FiGithub, href: 'https://github.com/kenul09' },
-  { key: 'linkedin', label: 'LinkedIn', icon: FiLinkedin, href: 'https://linkedin.com/in/konul-samadova' },
+  { key: 'linkedin', label: 'LinkedIn', icon: FiLinkedin, href: '[REAL LİNKEDİN LİNKİ]' },
   { key: 'instagram', label: 'Instagram', icon: FiInstagram, href: 'https://instagram.com/s.k_web' },
 ]
 
@@ -37,7 +37,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className={styles.footer} role="contentinfo" aria-label="Site footer">
+    <footer className={styles.footer}>
       <div className={styles.container}>
         {/* ── ROW 1 ── */}
         <div className={styles.topRow}>
@@ -94,18 +94,20 @@ export default function Footer() {
           </div>
 
           {/* Nav links */}
-          <nav className={styles.nav} aria-label="Footer" role="list">
-            {NAV_LINKS.map((key) => (
-              <button
-                key={key}
-                type="button"
-                role="listitem"
-                className={styles.navLink}
-                onClick={() => scrollToSection(key)}
-              >
-                {t.navbar[key]}
-              </button>
-            ))}
+          <nav className={styles.navWrap} aria-label="Footer">
+            <ul className={styles.nav}>
+              {NAV_LINKS.map((key) => (
+                <li key={key}>
+                  <button
+                    type="button"
+                    className={styles.navLink}
+                    onClick={() => scrollToSection(key)}
+                  >
+                    {t.navbar[key]}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </nav>
 
           {/* Social icons */}

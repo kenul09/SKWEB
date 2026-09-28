@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
+import { FiInstagram, FiMail, FiPhone, FiSend } from 'react-icons/fi'
 
 import { useLanguage } from '../../hooks'
 import { translations } from '../../translations'
@@ -22,18 +23,14 @@ export default function Contact() {
     email: '',
     interest: 'both',
     message: '',
-    agreed: false,
   })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
 
   const handle = (e) => {
-    const { name, value, type, checked } = e.target
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }))
     }
@@ -58,7 +55,6 @@ export default function Contact() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       newErrors.email = t.contact.errors.emailInvalid
     if (!form.message.trim()) newErrors.message = t.contact.errors.message
-    if (!form.agreed) newErrors.agreed = t.contact.privacyAlert
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -93,7 +89,6 @@ export default function Contact() {
         email: '',
         interest: 'both',
         message: '',
-        agreed: false,
       })
     } catch (error) {
       console.error('Email send failed:', error)
@@ -103,12 +98,12 @@ export default function Contact() {
     }
   }
 
-  const interestOptions = [
-    t.contact.options.both,
-    t.contact.options.design,
-    t.contact.options.development,
-    t.contact.options.landing,
-    t.contact.options.ecommerce,
+  const interestOptions = t.contact.interestOptions
+
+  const directLinks = [
+    { key: 'email', icon: FiMail, href: 'mailto:kenul94@mail.ru', value: 'kenul94@mail.ru' },
+    { key: 'phone', icon: FiPhone, href: 'tel:+994503417069', value: '+994 50 341 70 69' },
+    { key: 'instagram', icon: FiInstagram, href: 'https://instagram.com/s.k_web', value: '@s.k_web', external: true },
   ]
 
   return (
@@ -121,8 +116,8 @@ export default function Contact() {
 
       <div className={styles.container}>
         <div className={styles.contactInner}>
-          {/* LEFT */}
-          <div className={styles.contactLeft}>
+          {/* INTRO */}
+          <div className={styles.contactIntro}>
             <span className={styles.sectionLabel}>
               <span className={styles.labelDot} aria-hidden="true" />
               {t.contact.sectionLabel}
@@ -137,7 +132,45 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* RIGHT */}
+          {/* DIRECT CONTACT + NEXT STEPS */}
+          <div className={styles.contactAside}>
+            <div className={styles.infoBlock}>
+              <h3 className={styles.infoTitle}>{t.contact.directTitle}</h3>
+              <ul className={styles.directList}>
+                {directLinks.map(({ key, icon: Icon, href, value, external }) => (
+                  <li key={key}>
+                    <a
+                      href={href}
+                      className={styles.directLink}
+                      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+                    >
+                      <span className={styles.directIcon} aria-hidden="true">
+                        <Icon />
+                      </span>
+                      <span className={styles.directText}>
+                        <span className={styles.directLabel}>{t.contact.direct[key]}</span>
+                        <span className={styles.directValue}>{value}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={`${styles.infoBlock} ${styles.stepsBlock}`}>
+              <h3 className={styles.infoTitle}>{t.contact.stepsTitle}</h3>
+              <ol className={styles.steps}>
+                {t.contact.steps.map((step, i) => (
+                  <li key={i} className={styles.step}>
+                    <span className={styles.stepNum} aria-hidden="true">{i + 1}</span>
+                    <span className={styles.stepText}>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* FORM */}
           <div className={styles.contactRight}>
             {sent ? (
               <div
@@ -153,7 +186,6 @@ export default function Contact() {
                   </svg>
                 </div>
                 <h3 className={styles.successTitle}>
-                  <span aria-hidden="true">{'> '}</span>
                   {t.contact.successTitle}
                 </h3>
                 <p className={styles.successText}>
@@ -178,8 +210,9 @@ export default function Contact() {
                       id="name"
                       type="text"
                       name="name"
+                      autoComplete="name"
                       className={`${styles.formInput} ${errors.name ? styles.formInputError : ''}`}
-                      placeholder={t.contact.placeholders.name}
+                      placeholder={t.contact.examples.name}
                       value={form.name}
                       onChange={handle}
                       disabled={loading}
@@ -203,8 +236,9 @@ export default function Contact() {
                       id="email"
                       type="email"
                       name="email"
+                      autoComplete="email"
                       className={`${styles.formInput} ${errors.email ? styles.formInputError : ''}`}
-                      placeholder={t.contact.placeholders.email}
+                      placeholder={t.contact.examples.email}
                       value={form.email}
                       onChange={handle}
                       disabled={loading}
@@ -220,31 +254,30 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Interest */}
-                <div className={styles.formGroup}>
-                  <label htmlFor="interest" className={styles.formLabel}>
+                {/* Interest — native radios keep arrow-key navigation */}
+                <fieldset className={styles.chipFieldset} disabled={loading}>
+                  <legend className={styles.formLabel}>
                     {t.contact.interestLabel}
-                  </label>
-                  <div className={styles.selectWrapper}>
-                    <select
-                      id="interest"
-                      name="interest"
-                      className={styles.formSelect}
-                      value={form.interest}
-                      onChange={handle}
-                      disabled={loading}
-                    >
-                      {interestOptions.map((option) => (
-                        <option key={option.key} value={option.key}>
+                  </legend>
+                  <div className={styles.chips}>
+                    {interestOptions.map((option) => (
+                      <div key={option.key} className={styles.chip}>
+                        <input
+                          id={`interest-${option.key}`}
+                          type="radio"
+                          name="interest"
+                          value={option.key}
+                          className={styles.chipInput}
+                          checked={form.interest === option.key}
+                          onChange={handle}
+                        />
+                        <label htmlFor={`interest-${option.key}`} className={styles.chipLabel}>
                           {option.label}
-                        </option>
-                      ))}
-                    </select>
-                    <svg className={styles.selectIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Message */}
                 <div className={styles.formGroup}>
@@ -256,7 +289,7 @@ export default function Contact() {
                     id="message"
                     name="message"
                     className={`${styles.formTextarea} ${errors.message ? styles.formInputError : ''}`}
-                    placeholder={t.contact.placeholders.message}
+                    placeholder={t.contact.examples.message}
                     rows={5}
                     value={form.message}
                     onChange={handle}
@@ -271,37 +304,6 @@ export default function Contact() {
                     </span>
                   )}
                 </div>
-
-                {/* Checkbox */}
-                <label className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    name="agreed"
-                    className={styles.checkboxInput}
-                    checked={form.agreed}
-                    onChange={handle}
-                    disabled={loading}
-                    aria-required="true"
-                    aria-invalid={!!errors.agreed}
-                  />
-                  <span className={styles.checkboxBox} aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span className={styles.checkboxText}>
-                    {t.contact.privacyPrefix}{' '}
-                    <a href="#" className={styles.checkboxLink}>
-                      {t.contact.privacyLink}
-                    </a>{' '}
-                    {t.contact.privacySuffix}
-                  </span>
-                </label>
-                {errors.agreed && (
-                  <span className={styles.formError} role="alert">
-                    {errors.agreed}
-                  </span>
-                )}
 
                 {/* Submit error */}
                 {errors.submit && (
@@ -336,15 +338,13 @@ export default function Contact() {
                     </>
                   ) : (
                     <>
-                      <span className={styles.submitPrompt} aria-hidden="true">$ </span>
                       {t.contact.submit}
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <line x1="22" y1="2" x2="11" y2="13" />
-                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                      </svg>
+                      <FiSend aria-hidden="true" />
                     </>
                   )}
                 </button>
+
+                <p className={styles.privacyNote}>{t.contact.privacyNote}</p>
               </form>
             )}
           </div>
