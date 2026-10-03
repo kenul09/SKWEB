@@ -104,9 +104,11 @@
   border-radius: 999px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  list-style: none;
 }
 
 .navLink {
+  display: inline-block;
   position: relative;
   background: transparent;
   border: 0;
@@ -334,7 +336,17 @@
   padding: 96px 24px 32px;
 }
 
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .mobileLink {
+  display: block;
   width: 100%;
   text-align: left;
   padding: 14px 18px;

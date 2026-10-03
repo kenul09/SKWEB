@@ -52,10 +52,10 @@ export default function Hero() {
       <div className={styles.heroInner}>
         {/* ── LEFT — Content ── */}
         <div className={styles.heroContent}>
-          {t.footer.available && (
+          {t.hero.available && (
             <p className={`${styles.statusPill} ${styles.fadeInUp}`} style={stagger(0)}>
               <span className={styles.statusDot} aria-hidden="true" />
-              {t.footer.available}
+              {t.hero.available}
             </p>
           )}
 

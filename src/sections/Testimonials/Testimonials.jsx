@@ -3,19 +3,13 @@ import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 import { useLanguage } from '../../hooks'
 import { translations } from '../../translations'
+import { prefersReducedMotion } from '../../utils/motion'
 
 import styles from './Testimonials.module.css'
 
 const AUTOPLAY_MS = 7000
 /* Up to this many reviews, the side list is hidden and dots are used instead */
 const MAX_WITHOUT_LIST = 3
-
-function prefersReducedMotion() {
-  return (
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  )
-}
 
 export default function Testimonials() {
   const { language } = useLanguage()

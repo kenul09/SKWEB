@@ -8,23 +8,34 @@ import { translations } from '../../translations'
 
 import styles from './Contact.module.css'
 
-/* ── EmailJS Configuration ── */
-const EMAILJS_SERVICE_ID = 'service_htx2k8e'      // ← Öz Service ID
-const EMAILJS_TEMPLATE_ID = 'template_xyz789'    // ← Öz Template ID
-const EMAILJS_PUBLIC_KEY = 'FX5yH6EbphakDfCrd'           // ← Öz Public Key
+/* ── EmailJS Configuration (see .env.example) ── */
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+if (import.meta.env.DEV && (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY)) {
+  console.error(
+    'EmailJS is not configured: set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_PUBLIC_KEY in .env (see .env.example).'
+  )
+}
+
+/* Emails always use the English labels so incoming messages are consistent */
+const getInterestLabel = (key) =>
+  translations.en.contact.interestOptions.find((option) => option.key === key)?.label ?? key
+
+const INITIAL_FORM = {
+  name: '',
+  email: '',
+  interest: 'unsure',
+  message: '',
+}
 
 export default function Contact() {
   const { language } = useLanguage()
   const t = translations[language]
-  const formRef = useRef(null)
   const successRef = useRef(null)
 
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    interest: 'both',
-    message: '',
-  })
+  const [form, setForm] = useState(INITIAL_FORM)
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
@@ -32,8 +43,8 @@ export default function Contact() {
   const handle = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }))
+    if (errors[name] || errors.submit) {
+      setErrors((prev) => ({ ...prev, [name]: '', submit: '' }))
     }
   }
 
@@ -51,11 +62,12 @@ export default function Contact() {
 
   const validate = () => {
     const newErrors = {}
-    if (!form.name.trim()) newErrors.name = t.contact.errors.name
-    if (!form.email.trim()) newErrors.email = t.contact.errors.email
+    /* Store translation keys, not strings, so errors follow language changes */
+    if (!form.name.trim()) newErrors.name = 'name'
+    if (!form.email.trim()) newErrors.email = 'email'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      newErrors.email = t.contact.errors.emailInvalid
-    if (!form.message.trim()) newErrors.message = t.contact.errors.message
+      newErrors.email = 'emailInvalid'
+    if (!form.message.trim()) newErrors.message = 'message'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -72,7 +84,7 @@ export default function Contact() {
       const templateParams = {
         from_name: form.name,
         from_email: form.email,
-        interest: form.interest,
+        interest: getInterestLabel(form.interest),
         message: form.message,
       }
 
@@ -85,15 +97,10 @@ export default function Contact() {
 
       setSent(true)
       /* Reset form */
-      setForm({
-        name: '',
-        email: '',
-        interest: 'both',
-        message: '',
-      })
+      setForm(INITIAL_FORM)
     } catch (error) {
       console.error('Email send failed:', error)
-      setErrors({ submit: t.contact.errors.submitFailed })
+      setErrors({ submit: 'submitFailed' })
     } finally {
       setLoading(false)
     }
@@ -204,10 +211,16 @@ export default function Contact() {
                 <p className={styles.successText}>
                   {t.contact.successMessage}
                 </p>
+                <button
+                  type="button"
+                  className={styles.submitBtn}
+                  onClick={() => setSent(false)}
+                >
+                  {t.contact.sendAnother}
+                </button>
               </div>
             ) : (
               <form
-                ref={formRef}
                 className={styles.contactForm}
                 onSubmit={submit}
                 noValidate
@@ -235,7 +248,7 @@ export default function Contact() {
                     />
                     {errors.name && (
                       <span id="name-error" className={styles.formError} role="alert">
-                        {errors.name}
+                        {t.contact.errors[errors.name]}
                       </span>
                     )}
                   </div>
@@ -261,7 +274,7 @@ export default function Contact() {
                     />
                     {errors.email && (
                       <span id="email-error" className={styles.formError} role="alert">
-                        {errors.email}
+                        {t.contact.errors[errors.email]}
                       </span>
                     )}
                   </div>
@@ -313,7 +326,7 @@ export default function Contact() {
                   />
                   {errors.message && (
                     <span id="message-error" className={styles.formError} role="alert">
-                      {errors.message}
+                      {t.contact.errors[errors.message]}
                     </span>
                   )}
                 </div>
@@ -322,7 +335,7 @@ export default function Contact() {
                 {errors.submit && (
                   <div className={styles.submitError} role="alert">
                     <span className={styles.submitErrorIcon} aria-hidden="true">✗</span>
-                    {errors.submit}
+                    {t.contact.errors[errors.submit]}
                   </div>
                 )}
 

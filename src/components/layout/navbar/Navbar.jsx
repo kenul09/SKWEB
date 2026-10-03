@@ -6,16 +6,13 @@ import useScrollEffect from '../../../hooks/useScrollEffect'
 import useSectionVisibility from '../../../hooks/useSectionVisibility'
 import useSmoothScroll from '../../../hooks/useSmoothScroll'
 
-import { BREAKPOINTS, SHOW_TESTIMONIALS } from '../../../config'
+import { BREAKPOINTS, NAV_LINKS } from '../../../config'
 import { translations } from '../../../translations'
 import LanguageSwitcher from '../../common/LanguageSwitcher'
 
 import styles from './Navbar.module.css'
 
 /* ── Constants ── */
-const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact'].filter(
-  (link) => link !== 'testimonials' || SHOW_TESTIMONIALS
-)
 const SCROLL_THRESHOLD = 40
 
 /* ── Component ── */
@@ -32,10 +29,12 @@ export default function Navbar({ toggleTheme, theme }) {
   const activeSection = useSectionVisibility(NAV_LINKS)
   const { scrollToSection } = useSmoothScroll()
 
-  /* ── Close mobile menu when switching to desktop ── */
-  useEffect(() => {
+  /* ── Close mobile menu when switching to desktop (adjusted during render) ── */
+  const [prevIsMobile, setPrevIsMobile] = useState(isMobile)
+  if (isMobile !== prevIsMobile) {
+    setPrevIsMobile(isMobile)
     if (!isMobile) setMenuOpen(false)
-  }, [isMobile])
+  }
 
   /* ── Lock body scroll when mobile menu is open ── */
   useEffect(() => {
@@ -62,8 +61,10 @@ export default function Navbar({ toggleTheme, theme }) {
     return () => window.removeEventListener('keydown', handleEsc)
   }, [menuOpen])
 
-  const handleScrollTo = useCallback(
-    (section) => {
+  /* Real #hash links (work without JS, open in new tab); smooth scroll on click */
+  const handleLinkClick = useCallback(
+    (e, section) => {
+      e.preventDefault()
       scrollToSection(section)
       setMenuOpen(false)
     },
@@ -131,21 +132,22 @@ export default function Navbar({ toggleTheme, theme }) {
           </a>
 
           {/* ── Desktop Nav ── */}
-          <div className={styles.navLinks} role="list">
+          <ul className={styles.navLinks}>
             {NAV_LINKS.map((link) => (
-              <button
-                key={link}
-                role="listitem"
-                className={`${styles.navLink} ${
-                  activeSection === link ? styles.active : ''
-                }`}
-                onClick={() => handleScrollTo(link)}
-                aria-current={activeSection === link ? 'page' : undefined}
-              >
-                {t.navbar[link]}
-              </button>
+              <li key={link}>
+                <a
+                  href={`#${link}`}
+                  className={`${styles.navLink} ${
+                    activeSection === link ? styles.active : ''
+                  }`}
+                  onClick={(e) => handleLinkClick(e, link)}
+                  aria-current={activeSection === link ? 'page' : undefined}
+                >
+                  {t.navbar[link]}
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
 
           {/* ── Right Section ── */}
           <div className={styles.navRight}>
@@ -188,29 +190,33 @@ export default function Navbar({ toggleTheme, theme }) {
       />
 
       {/* ── Mobile Menu ── */}
-      <div
+      <nav
         id="mobile-menu"
         className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}
-        role="menu"
+        aria-label={t.navbar.ariaLabel}
         aria-hidden={!menuOpen}
         /* React 18 doesn't know `inert` as a boolean prop — pass a string */
         inert={!menuOpen ? '' : undefined}
       >
         <div className={styles.mobileMenuInner}>
-          {NAV_LINKS.map((link, index) => (
-            <button
-              key={link}
-              ref={index === 0 ? firstLinkRef : undefined}
-              role="menuitem"
-              className={`${styles.mobileLink} ${
-                activeSection === link ? styles.mobileLinkActive : ''
-              }`}
-              onClick={() => handleScrollTo(link)}
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              {t.navbar[link]}
-            </button>
-          ))}
+          <ul className={styles.mobileLinks}>
+            {NAV_LINKS.map((link, index) => (
+              <li key={link}>
+                <a
+                  ref={index === 0 ? firstLinkRef : undefined}
+                  href={`#${link}`}
+                  className={`${styles.mobileLink} ${
+                    activeSection === link ? styles.mobileLinkActive : ''
+                  }`}
+                  onClick={(e) => handleLinkClick(e, link)}
+                  aria-current={activeSection === link ? 'page' : undefined}
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  {t.navbar[link]}
+                </a>
+              </li>
+            ))}
+          </ul>
 
           <div className={styles.mobileDivider} />
 
@@ -227,7 +233,7 @@ export default function Navbar({ toggleTheme, theme }) {
             <span>{themeLabel}</span>
           </button>
         </div>
-      </div>
+      </nav>
     </>
   )
 }

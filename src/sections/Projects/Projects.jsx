@@ -5,6 +5,8 @@ import Button from '../../components/ui/Button'
 import { useLanguage } from '../../hooks'
 import useSmoothScroll from '../../hooks/useSmoothScroll'
 import { translations } from '../../translations'
+import { PROJECTS } from '../../data/projects'
+import { prefersReducedMotion } from '../../utils/motion'
 
 import styles from './Projects.module.css'
 
@@ -16,13 +18,6 @@ function getHostname(url) {
   } catch {
     return ''
   }
-}
-
-function prefersReducedMotion() {
-  return (
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  )
 }
 
 function BrowserBar({ link, soonLabel }) {
@@ -91,6 +86,12 @@ export default function Projects() {
   const t = translations[language]
   const { scrollToSection } = useSmoothScroll()
 
+  /* Merge language-independent fields with the translated text */
+  const projects = PROJECTS.map((project) => ({
+    ...project,
+    ...t.projects.cards.find((card) => card.id === project.id),
+  }))
+
   const trackRef = useRef(null)
   const [scrollState, setScrollState] = useState({
     hasOverflow: false,
@@ -118,11 +119,15 @@ export default function Projects() {
     const track = trackRef.current
     if (!track) return
 
-    window.addEventListener('resize', updateScrollState)
+    /* Observing the track and its slides catches viewport resizes as well as
+       lazy images loading and changing the content width */
+    const resizeObserver = new ResizeObserver(updateScrollState)
+    resizeObserver.observe(track)
+    Array.from(track.children).forEach((slide) => resizeObserver.observe(slide))
     track.addEventListener('scroll', updateScrollState, { passive: true })
 
     return () => {
-      window.removeEventListener('resize', updateScrollState)
+      resizeObserver.disconnect()
       track.removeEventListener('scroll', updateScrollState)
     }
   }, [updateScrollState, language])
@@ -210,8 +215,8 @@ export default function Projects() {
           tabIndex={0}
           aria-label={t.projects.title}
         >
-          {t.projects.cards.map((project) => (
-            <li key={project.title} className={styles.slide}>
+          {projects.map((project) => (
+            <li key={project.id} className={styles.slide}>
               <ProjectCard project={project} buttons={t.projects.buttons} />
             </li>
           ))}

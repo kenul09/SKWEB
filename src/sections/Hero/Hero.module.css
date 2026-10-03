@@ -266,13 +266,16 @@
   left: 50%;
   width: 58%;
   transform: translate(-50%, -50%);
+  /* The shadow lives on the wrapper, not the <img>: the img's mask-image
+     clips everything to its box, which cut the glow into a hard-edged
+     rectangle around the character. Here it's applied after the mask. */
+  filter: drop-shadow(0 20px 48px var(--blue-glow));
 }
 
 .characterImage {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 20px 48px var(--blue-glow));
   /* Softens the image's hard bottom crop into the page */
   -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent);
   mask-image: linear-gradient(to bottom, black 82%, transparent);
@@ -378,8 +381,33 @@
     order: -1;
   }
 
+  .heroInner {
+    gap: var(--space-6);
+  }
+
+  /* No orbit here, so the square scene was just empty space above and
+     below the character. Let the image set the height instead. */
   .orbitScene {
-    max-width: 360px;
+    width: auto;
+    max-width: none;
+    aspect-ratio: auto;
+  }
+
+  .characterWrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    /* Shrinks on short screens so the buttons stay above the fold */
+    width: clamp(140px, min(44vw, 26svh), 260px);
+  }
+
+  .glow {
+    inset: -25%;
+  }
+
+  .statusPill {
+    margin-bottom: var(--space-4);
   }
 
   .heroContent {
@@ -454,34 +482,41 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: var(--space-6) 0 var(--space-6);
+    padding: var(--space-4) 0 var(--space-6);
   }
 
   .heroInner {
     width: min(100%, calc(100% - 32px));
-  }
-
-  .orbitScene {
-    max-width: 260px;
-  }
-
-  .characterWrapper {
-    width: 80%;
+    gap: var(--space-4);
   }
 
   .heroHeading {
     font-size: clamp(2.25rem, 10vw, 3rem);
+    margin-bottom: var(--space-3);
   }
 
+  .valueProp {
+    margin-bottom: var(--space-3);
+  }
+
+  .heroDesc {
+    margin-bottom: var(--space-5);
+  }
+
+  /* Side by side while both fit; flex-wrap drops the second button to
+     its own row for longer labels (RU) or very narrow screens. */
   .heroActions {
-    flex-direction: column;
     align-self: stretch;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
   }
 
   .btnPrimary,
   .btnGhost {
-    width: 100%;
+    flex: 1 1 140px;
+    width: auto;
     min-width: 0;
+    padding: 14px 16px;
   }
 }
 

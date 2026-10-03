@@ -1,7 +1,3 @@
-import aprintImg from "../assets/images/slide1.webp";
-import ecommerceImg from "../assets/images/slide2.webp";
-import cvBuilderImg from "../assets/images/slide3.webp";
-
 export const translations = {
   az: {
     navbar: {
@@ -15,6 +11,7 @@ export const translations = {
       contact: 'Əlaqə',
     },
     hero: {
+      available: 'Yeni layihələr üçün açığam',
       valueProp: 'Bizneslər üçün sürətli, satış gətirən saytlar hazırlayıram.',
       desc: 'Frontend Developer və UI/UX dizayner kimi ideyanı dizayndan canlı sayta qədər özüm aparıram.',
       trust: [
@@ -28,6 +25,7 @@ export const translations = {
     about: {
       sectionLabel: 'Haqqında',
       title: 'Mən kiməm',
+      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
         '[Neçə ildir veb sahəsindəsən və necə başlamısan, 1-2 cümlə.]',
         '[Hansı növ müştərilərlə işləyirsən və onlarla işləmə tərzin, 1-2 cümlə.]',
@@ -63,7 +61,6 @@ export const translations = {
     theme: {
       lightMode: 'İşıqlı Rejim',
       darkMode: 'Qaranlıq Rejim',
-      toggleLabel: 'Mövzunu dəyiş',
     },
     services: {
       sectionLabel: 'Xidmətlərim',
@@ -135,44 +132,34 @@ export const translations = {
       },
       cards: [
         {
+          id: 'cv-builder',
           title: 'CV Builder Platforması',
           type: 'Veb tətbiq',
           desc: 'Peşəkar CV-lər yaratmaq üçün intuitiv platforma.',
-          color: '#2563eb',
-          img: cvBuilderImg,
-          link: 'https://cvgenerateapp.vercel.app/',
         },
         {
+          id: 'social-dashboard',
           title: 'Social Media Dashboard',
           type: 'UI/UX dizayn',
           desc: 'Daha yüksək cəlb etmək üçün təmiz dashboard dizaynı.',
-          color: '#3b82f6',
-          img: null,
-          link: 'https://social-app-orpin-five.vercel.app/',
         },
         {
+          id: 'aprint',
           title: 'Aprint – Branding Platforması',
           type: 'Brendinq saytı',
           desc: 'Brendinq və kreativ xidmətlər üçün peşəkar platforma.',
-          color: '#9333ea',
-          img: aprintImg,
-          link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
+          id: 'film',
           title: 'Film Platforması',
           type: 'UI/UX dizayn',
           desc: 'Filmlər və seriallar üçün cəlbedici UI/UX dizaynı.',
-          color: '#ec4899',
-          img: null,
-          link: 'https://routerweb-68o4.vercel.app/',
         },
         {
+          id: 'ecommerce',
           title: 'E-commerce Platforması',
           type: 'Onlayn mağaza',
           desc: 'Müasir online mağaza dizaynı və funksionallığı.',
-          color: '#f59e0b',
-          img: ecommerceImg,
-          link: '',
         },
       ],
     },
@@ -217,7 +204,7 @@ export const translations = {
         { key: 'development', label: 'Veb inkişaf' },
         { key: 'landing', label: 'Landing page' },
         { key: 'ecommerce', label: 'Onlayn mağaza' },
-        { key: 'both', label: 'Hələ bilmirəm' },
+        { key: 'unsure', label: 'Hələ bilmirəm' },
       ],
       privacyNote: 'Məlumatlarınız yalnız sizə cavab vermək üçün istifadə olunur.',
       submit: 'Mesajı göndər',
@@ -225,6 +212,7 @@ export const translations = {
       interestLabel: 'Maraqlandığınız sahə',
       successTitle: 'Mesaj göndərildi!',
       successMessage: '24 saat ərzində sizə cavab verəcəyəm.',
+      sendAnother: 'Yeni mesaj göndər',
       errors: {
         name: 'Ad tələb olunur',
         email: 'E-poçt tələb olunur',
@@ -234,7 +222,6 @@ export const translations = {
       },
     },
     footer: {
-      available: 'Yeni layihələr üçün açığam',
       rights: 'Bütün hüquqlar qorunur.',
       backToTop: 'Yuxarı qalx',
     },
@@ -252,6 +239,7 @@ export const translations = {
       contact: 'Contact',
     },
     hero: {
+      available: 'Available for new projects',
       valueProp: 'I build fast websites that bring businesses more customers.',
       desc: 'As a frontend developer and UI/UX designer, I take your idea from design to a live site myself.',
       trust: [
@@ -265,6 +253,7 @@ export const translations = {
     about: {
       sectionLabel: 'About',
       title: 'Who I am',
+      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
         '[How many years you\'ve been working on the web and how you started, 1–2 sentences.]',
         '[What kind of clients you work with and how you work with them, 1–2 sentences.]',
@@ -300,7 +289,6 @@ export const translations = {
     theme: {
       lightMode: 'Light Mode',
       darkMode: 'Dark Mode',
-      toggleLabel: 'Toggle theme',
     },
     services: {
       sectionLabel: 'My Services',
@@ -372,44 +360,34 @@ export const translations = {
       },
       cards: [
         {
+          id: 'cv-builder',
           title: 'CV Builder Platform',
           type: 'Web App',
           desc: 'An intuitive platform to build professional CVs with ease.',
-          color: '#2563eb',
-          img: cvBuilderImg,
-          link: 'https://cvgenerateapp.vercel.app/',
         },
         {
+          id: 'social-dashboard',
           title: 'Social Media Dashboard',
           type: 'UI/UX Design',
           desc: 'A clean and modern dashboard design for better engagement.',
-          color: '#3b82f6',
-          img: null,
-          link: 'https://social-app-orpin-five.vercel.app/',
         },
         {
+          id: 'aprint',
           title: 'Aprint – Branding Services Platform',
           type: 'Branding Site',
           desc: 'A professional platform for branding and creative services.',
-          color: '#9333ea',
-          img: aprintImg,
-          link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
+          id: 'film',
           title: 'Film Platform',
           type: 'UI/UX Design',
           desc: 'An immersive UI/UX design for movies and TV series.',
-          color: '#ec4899',
-          img: null,
-          link: 'https://routerweb-68o4.vercel.app/',
         },
         {
+          id: 'ecommerce',
           title: 'E-commerce Platform',
           type: 'Online Store',
           desc: 'Modern online store design and functionality.',
-          color: '#f59e0b',
-          img: ecommerceImg,
-          link: '',
         },
       ],
     },
@@ -454,7 +432,7 @@ export const translations = {
         { key: 'development', label: 'Web development' },
         { key: 'landing', label: 'Landing page' },
         { key: 'ecommerce', label: 'Online store' },
-        { key: 'both', label: 'Not sure yet' },
+        { key: 'unsure', label: 'Not sure yet' },
       ],
       privacyNote: 'Your details are only used to reply to you.',
       submit: 'Send message',
@@ -462,6 +440,7 @@ export const translations = {
       interestLabel: 'Interested in',
       successTitle: 'Message sent!',
       successMessage: "I'll get back to you within 24 hours.",
+      sendAnother: 'Send another message',
       errors: {
         name: 'Name is required',
         email: 'Email is required',
@@ -471,7 +450,6 @@ export const translations = {
       },
     },
     footer: {
-      available: 'Available for new projects',
       rights: 'All rights reserved.',
       backToTop: 'Back to top',
     },
@@ -489,6 +467,7 @@ export const translations = {
       contact: 'Контакт',
     },
     hero: {
+      available: 'Открыта для новых проектов',
       valueProp: 'Создаю быстрые сайты, которые приводят бизнесу клиентов.',
       desc: 'Как frontend-разработчик и UI/UX дизайнер, сама веду проект от дизайна до готового сайта.',
       trust: [
@@ -502,6 +481,7 @@ export const translations = {
     about: {
       sectionLabel: 'Обо мне',
       title: 'Кто я',
+      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
         '[Сколько лет вы в веб-разработке и с чего начинали, 1–2 предложения.]',
         '[С какими клиентами вы работаете и как строите работу с ними, 1–2 предложения.]',
@@ -537,7 +517,6 @@ export const translations = {
     theme: {
       lightMode: 'Светлый режим',
       darkMode: 'Тёмный режим',
-      toggleLabel: 'Сменить тему',
     },
     services: {
       sectionLabel: 'Мои услуги',
@@ -609,44 +588,34 @@ export const translations = {
       },
       cards: [
         {
+          id: 'cv-builder',
           title: 'Платформа для создания резюме',
           type: 'Веб-приложение',
           desc: 'Интуитивная платформа для создания профессиональных резюме.',
-          color: '#2563eb',
-          img: cvBuilderImg,
-          link: 'https://cvgenerateapp.vercel.app/',
         },
         {
+          id: 'social-dashboard',
           title: 'Дашборд социальных сетей',
           type: 'UI/UX дизайн',
           desc: 'Чистый и современный дизайн для лучшего вовлечения.',
-          color: '#3b82f6',
-          img: null,
-          link: 'https://social-app-orpin-five.vercel.app/',
         },
         {
+          id: 'aprint',
           title: 'Aprint – Платформа брендинга',
           type: 'Сайт-брендинг',
           desc: 'Платформа для брендинга и креативных услуг.',
-          color: '#9333ea',
-          img: aprintImg,
-          link: 'https://custom-hook-kappa-sand.vercel.app/',
         },
         {
+          id: 'film',
           title: 'Кино-платформа',
           type: 'UI/UX дизайн',
           desc: 'Погружающий UI/UX для кино и сериалов.',
-          color: '#ec4899',
-          img: null,
-          link: 'https://routerweb-68o4.vercel.app/',
         },
         {
+          id: 'ecommerce',
           title: 'E-commerce Платформа',
           type: 'Интернет-магазин',
           desc: 'Современный дизайн и функциональность онлайн магазина.',
-          color: '#f59e0b',
-          img: ecommerceImg,
-          link: '',
         },
       ],
     },
@@ -691,7 +660,7 @@ export const translations = {
         { key: 'development', label: 'Веб-разработка' },
         { key: 'landing', label: 'Landing page' },
         { key: 'ecommerce', label: 'Интернет-магазин' },
-        { key: 'both', label: 'Пока не знаю' },
+        { key: 'unsure', label: 'Пока не знаю' },
       ],
       privacyNote: 'Ваши данные используются только для ответа вам.',
       submit: 'Отправить сообщение',
@@ -699,6 +668,7 @@ export const translations = {
       interestLabel: 'Интересующая услуга',
       successTitle: 'Сообщение отправлено!',
       successMessage: 'Я свяжусь с вами в течение 24 часов.',
+      sendAnother: 'Отправить ещё одно сообщение',
       errors: {
         name: 'Введите имя',
         email: 'Введите email',
@@ -708,7 +678,6 @@ export const translations = {
       },
     },
     footer: {
-      available: 'Открыта для новых проектов',
       rights: 'Все права защищены.',
       backToTop: 'Наверх',
     },

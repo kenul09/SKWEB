@@ -146,7 +146,9 @@ export default function Services() {
 
           {/* DETAIL PANEL */}
           {!isMobile && (
+            /* key re-mounts the panel so it re-animates on tab change */
             <ServiceDetail
+              key={cards[activeIndex].key}
               card={cards[activeIndex]}
               includesLabel={t.services.includesLabel}
               cta={t.services.cta}
@@ -166,11 +168,10 @@ function ServiceDetail({ card, includesLabel, cta, onRequest, panelId, tabId, mo
 
   return (
     <div
-      key={card.key}
       id={panelId}
       className={`${styles.servicesPanel} ${mobile ? styles.servicesPanelMobile : ''}`}
       role={mobile ? 'region' : 'tabpanel'}
-      aria-labelledby={mobile ? undefined : tabId}
+      aria-labelledby={tabId}
       tabIndex={mobile ? undefined : 0}
     >
       <Icon className={styles.servicesWatermark} aria-hidden="true" />

@@ -2,28 +2,18 @@ import { FiArrowUp, FiGithub, FiInstagram, FiLinkedin } from 'react-icons/fi'
 
 import { useLanguage } from '../../../hooks'
 import useSmoothScroll from '../../../hooks/useSmoothScroll'
-import { SHOW_TESTIMONIALS } from '../../../config'
+import { NAV_LINKS } from '../../../config'
 import { translations } from '../../../translations'
+import { prefersReducedMotion } from '../../../utils/motion'
 
 import styles from './Footer.module.css'
 
 /* ── Constants ── */
-const NAV_LINKS = ['about', 'responsiveness', 'services', 'projects', 'testimonials', 'contact'].filter(
-  (link) => link !== 'testimonials' || SHOW_TESTIMONIALS
-)
-
 const SOCIAL_LINKS = [
   { key: 'github', label: 'GitHub', icon: FiGithub, href: 'https://github.com/kenul09' },
-  { key: 'linkedin', label: 'LinkedIn', icon: FiLinkedin, href: '[REAL LİNKEDİN LİNKİ]' },
+  { key: 'linkedin', label: 'LinkedIn', icon: FiLinkedin, href: '[REAL LİNKEDİN LİNKİ]' }, // TODO: add the real LinkedIn URL
   { key: 'instagram', label: 'Instagram', icon: FiInstagram, href: 'https://instagram.com/s.k_web' },
 ]
-
-function prefersReducedMotion() {
-  return (
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  )
-}
 
 export default function Footer() {
   const { language } = useLanguage()
@@ -48,7 +38,6 @@ export default function Footer() {
           <div className={styles.brandRow}>
             <a href="/" className={styles.logo} aria-label="SK WEB Home">
               <svg
-                className={styles.logoIcon}
                 width="20"
                 height="20"
                 viewBox="0 0 24 24"
@@ -94,13 +83,16 @@ export default function Footer() {
             <ul className={styles.nav}>
               {NAV_LINKS.map((key) => (
                 <li key={key}>
-                  <button
-                    type="button"
+                  <a
+                    href={`#${key}`}
                     className={styles.navLink}
-                    onClick={() => scrollToSection(key)}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      scrollToSection(key)
+                    }}
                   >
                     {t.navbar[key]}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>

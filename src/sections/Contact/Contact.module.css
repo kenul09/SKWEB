@@ -698,6 +698,10 @@
   margin: 0;
 }
 
+.successMsg .submitBtn {
+  align-self: center;
+}
+
 @keyframes successPop {
   0% { opacity: 0; transform: scale(0.95) translateY(10px); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
