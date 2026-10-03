@@ -51,7 +51,7 @@
 /* =========================
    LAYOUT
    Desktop: intro + aside on the left, form spanning both rows on the right.
-   Mobile: intro → form → aside.
+   Mobile: intro → direct contact → form → next steps.
 ========================= */
 
 .contactInner {
@@ -768,17 +768,33 @@
     width: min(100%, calc(100% - 48px));
   }
 
+  /* Single column; the aside is flattened so its two blocks can be
+     ordered around the form */
   .contactInner {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "intro"
-      "form"
-      "aside";
+    display: flex;
+    flex-direction: column;
     row-gap: var(--space-10);
   }
 
+  .contactAside {
+    display: contents;
+  }
+
+  .infoBlock {
+    order: 2;
+  }
+
+  .contactRight {
+    order: 3;
+  }
+
+  .stepsBlock {
+    display: flex;                    /* hidden at ≤1024px, shown again below the form */
+    order: 4;
+  }
+
   .contactIntro {
+    order: 1;
     gap: 14px;
   }
 

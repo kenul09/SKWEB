@@ -485,6 +485,10 @@
    ============================================ */
 
 @media (max-width: 480px) {
+  .testimonials {
+    padding: var(--space-12) 0;
+  }
+
   .container {
     width: min(100%, calc(100% - 32px));
   }
