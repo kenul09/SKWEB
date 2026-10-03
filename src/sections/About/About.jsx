@@ -55,13 +55,15 @@ export default function About() {
               {t.about.title}
             </h2>
 
-            <div className={styles.paragraphs}>
-              {t.about.paragraphs.map((text, i) => (
-                <p key={i} className={styles.aboutText}>
-                  {text}
-                </p>
-              ))}
-            </div>
+            {t.about.paragraphs.length > 0 && (
+              <div className={styles.paragraphs}>
+                {t.about.paragraphs.map((text, i) => (
+                  <p key={i} className={styles.aboutText}>
+                    {text}
+                  </p>
+                ))}
+              </div>
+            )}
 
             <ul className={styles.principles}>
               {t.about.principles.map((label, i) => {

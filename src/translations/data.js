@@ -25,10 +25,9 @@ export const translations = {
     about: {
       sectionLabel: 'Haqqında',
       title: 'Mən kiməm',
-      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
-        '[Neçə ildir veb sahəsindəsən və necə başlamısan, 1-2 cümlə.]',
-        '[Hansı növ müştərilərlə işləyirsən və onlarla işləmə tərzin, 1-2 cümlə.]',
+        'Saytları həm dizayn edir, həm də kodlaşdırıram. Ona görə ideya ilə nəticə arasında heç nə itmir: Figma-da başlayan layihə React ilə canlı sayta çevrilir.',
+        'Əsasən bizneslər və fərdi sahibkarlarla işləyirəm. Hər mərhələdə sizinlə əlaqədə qalıram, qərarları birlikdə veririk və nəticəni aydın şəkildə təhvil verirəm.',
       ],
       principles: ['Sürət', 'İstifadəçi rahatlığı', 'Hər ekrana uyğun'],
       toolsTitle: 'Hansı alətlərlə işləyirəm',
@@ -253,10 +252,9 @@ export const translations = {
     about: {
       sectionLabel: 'About',
       title: 'Who I am',
-      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
-        '[How many years you\'ve been working on the web and how you started, 1–2 sentences.]',
-        '[What kind of clients you work with and how you work with them, 1–2 sentences.]',
+        'I design and build websites myself, so nothing gets lost between the idea and the result: a project that starts in Figma becomes a live React site.',
+        'I mostly work with businesses and independent professionals. I stay in touch at every stage, we make decisions together, and I hand over a clear, finished result.',
       ],
       principles: ['Speed', 'Ease of use', 'Fits every screen'],
       toolsTitle: 'Tools I work with',
@@ -481,10 +479,9 @@ export const translations = {
     about: {
       sectionLabel: 'Обо мне',
       title: 'Кто я',
-      // TODO: replace the About paragraph placeholders below with real text
       paragraphs: [
-        '[Сколько лет вы в веб-разработке и с чего начинали, 1–2 предложения.]',
-        '[С какими клиентами вы работаете и как строите работу с ними, 1–2 предложения.]',
+        'Я сама и проектирую, и разрабатываю сайты, поэтому между идеей и результатом ничего не теряется: проект, начатый в Figma, превращается в живой сайт на React.',
+        'В основном работаю с бизнесом и частными специалистами. Я на связи на каждом этапе, решения мы принимаем вместе, а результат передаю в понятном и готовом виде.',
       ],
       principles: ['Скорость', 'Удобство для пользователя', 'Под любой экран'],
       toolsTitle: 'С какими инструментами работаю',
